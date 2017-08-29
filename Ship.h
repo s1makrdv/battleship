@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-#include "BS_ShipTile.h"
+#include "ShipTile.h"
 
 class Ship {
 public:
@@ -12,25 +12,25 @@ public:
 		char size;
 	} shipInfo;
 
-	typedef std::vector<BS_ShipTile>::iterator ship_it;
+    typedef std::vector<ShipTile>::iterator ship_it;
 
 	// Constructors
 	Ship(const shipInfo&, char c1, char r1, char c2, char r2);
 
 	std::string type() {
-		return info.type;
+        return info_.type;
 	}
 
 	char size() {
-		return info.size;
+        return info_.size;
 	}
 
-	std::vector<BS_ShipTile>::iterator shipBegin() {
-		return sections.begin();
+    std::vector<ShipTile>::iterator shipBegin() {
+        return sections_.begin();
 	}
 
-	std::vector<BS_ShipTile>::iterator shipEnd() {
-		return sections.end();
+    std::vector<ShipTile>::iterator shipEnd() {
+        return sections_.end();
 	}
 
 	bool collision(Ship&);
@@ -40,8 +40,8 @@ public:
 	bool static checkSize(char, char, char, char, char);
 
 private:
-	shipInfo info;
-	std::vector<BS_ShipTile> sections;
+    shipInfo info_;
+    std::vector<ShipTile> sections_;
 };
 
 #endif // SHIP_H

@@ -1,15 +1,15 @@
-#ifndef BS_BOARD_H
-#define BS_BOARD_H
+#ifndef BOARD_H
+#define BOARD_H
 
 #include <vector>
 #include <queue>
 #include <string>
 #include <iostream>
-#include "BS_BoardTile.h"
+#include "BoardTile.h"
 #include "Ship.h"
 #include "ConsoleDisplay.h"
 
-class BS_Board {
+class Board {
 public:
 	static int const boardSize = 10;
 
@@ -25,7 +25,7 @@ public:
                             { "Single-deck", 1}};
 
 	// Constructors
-	BS_Board(std::istream& i, std::ostream& o);
+    Board(std::istream& i, std::ostream& o);
 
 	void placeShips();
 	bool makeAttempt(char c, char r);
@@ -34,16 +34,17 @@ public:
 	bool fleetSunk();
 	void writeShipGrid(ConsoleDisplay& display);
 	void writeAttackGrid(ConsoleDisplay& display);
+
 private:
-	bool shipCollision(Ship&);
-	void shipPlacementPrompt(const Ship::shipInfo&, ConsoleDisplay& display);
-	void shipPlacementRandom(const Ship::shipInfo&);
-	void markBoard(Ship&);
-	std::istream& in;
-	std::ostream& out;
-	std::vector<Ship> ships;
-	std::vector<BS_BoardTile> shipGrid;
-	std::vector<BS_BoardTile> attackGrid;
+    bool shipCollision_(Ship&);
+    void shipPlacementPrompt_(const Ship::shipInfo&, ConsoleDisplay& display);
+    void shipPlacementRandom_(const Ship::shipInfo&);
+    void markBoard_(Ship&);
+    std::istream& in_;
+    std::ostream& out_;
+    std::vector<Ship> ships_;
+    std::vector<BoardTile> shipGrid_;
+    std::vector<BoardTile> attackGrid_;
 };
 
-#endif //BS_BOARD_H
+#endif //BOARD_H

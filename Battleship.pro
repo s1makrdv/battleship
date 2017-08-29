@@ -1,4 +1,4 @@
-QT += core
+QT -= core
 QT -= gui
 
 CONFIG += c++11
@@ -10,27 +10,27 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 HEADERS += BattleShip.h \
-    BS_Board.h\
-    BS_BoardTile.h\
-    BS_ComputerPlayer.h\
-    BS_HumanPlayer.h\
-    BS_Player.h\
-    BS_ShipTile.h\
-    BS_Strategy.h\
-    BS_Tile.h\
     ConsoleDisplay.h\
     Coord.h\
     Game.h\
-    Ship.h
+    Ship.h \
+    Board.h \
+    BoardTile.h \
+    ComputerPlayer.h \
+    HumanPlayer.h \
+    Player.h \
+    ShipTile.h \
+    Strategy.h \
+    Tile.h
 
 SOURCES += main.cpp \
     Ship.cpp\
     BattleShip.cpp\
-    BS_Board.cpp\
-    BS_ComputerPlayer.cpp\
-    BS_HumanPlayer.cpp\
-    BS_Strategy.cpp\
-    ConsoleDisplay.cpp
+    ConsoleDisplay.cpp \
+    Board.cpp \
+    ComputerPlayer.cpp \
+    HumanPlayer.cpp \
+    Strategy.cpp
 
 
 DEFINES += QT_DEPRECATED_WARNINGS

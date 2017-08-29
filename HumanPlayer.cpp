@@ -1,27 +1,27 @@
-#include "BS_HumanPlayer.h"
+#include "HumanPlayer.h"
 #include <string>
 #include <cctype>
 #include <cstdlib>
 
 using namespace std;
 
-BS_HumanPlayer::BS_HumanPlayer(istream& i, ostream& o) : in(i), out(o)
+HumanPlayer::HumanPlayer(istream& i, ostream& o) : in_(i), out_(o)
 {
 	string str;
 	do {
-		out << "Welcome To Battle Ship!!! What is your name (Max 20 chars)?: ";
-		in >> str;
+		out_ << "Welcome To Battle Ship!!! What is your name (Max 20 chars)?: ";
+		in_ >> str;
 	} while (str.length() > 20);
 
-	n = str;
+	n_ = str;
 }
 
-bool BS_HumanPlayer::readUserShotInput(char *col, char *row)
+bool HumanPlayer::readUserShotInput_(char *col, char *row)
 {
 	char c;
     	string str;
 
-    while(in.get(c) && isdigit(c)) {
+    while(in_.get(c) && isdigit(c)) {
         str.push_back(c);
 	}
 
@@ -44,15 +44,15 @@ bool BS_HumanPlayer::readUserShotInput(char *col, char *row)
 	return true;
 }
 
-void BS_HumanPlayer::move(char* c, char* r, BS_Board& board)
+void HumanPlayer::move(char* c, char* r, Board& board)
 {
 	bool success = false;
 	do {
-		out << "Enter your shot (ex. 1A):";
+		out_ << "Enter your shot (ex. 1A):";
 
-        while(in.get() != '\n');
+        while(in_.get() != '\n');
 
-		if (!readUserShotInput(c, r)) {
+		if (!readUserShotInput_(c, r)) {
 			continue;
 		}
 

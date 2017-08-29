@@ -6,24 +6,24 @@
 class Game {
 public:
 	// Constructor
-    Game() : finished(false), paused(false) { }
+    Game() : finished_(false), paused_(false) { }
 
     virtual void gameUpdate() = 0;
 
     bool gameOver() {
-		return finished;
+        return finished_;
 	}
 
     void gameEnd() {
-        finished = true;
+        finished_ = true;
     }
 
     bool getPaused() {
-        return paused;
+        return paused_;
     }
 
     void setPaused() {
-        paused = true;
+        paused_ = true;
     }
 
 	// Destructor
@@ -31,8 +31,8 @@ public:
 
 private:
 
-	bool finished;
-    bool paused;
+    bool finished_;
+    bool paused_;
 };
 
 #endif // GAME_H
