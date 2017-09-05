@@ -12,15 +12,14 @@
 static const char screenPanels[] = {30, 30, 60};
 static const char screenHeight = 40;
 
-class BattleShip : public Game {
-    friend class HumanPlayer;
-    friend class ComputerPlayer;
-public:
-	BattleShip(std::istream&, std::ostream&);
+class BattleShip : public Game
+{
+  public:
+    BattleShip(std::istream&, std::ostream&);
 
     void gameUpdate();
 
-private:
+  private:
     std::istream& in_;
     std::ostream& out_;
     ConsoleDisplay display_;

@@ -7,56 +7,57 @@ using namespace std;
 
 HumanPlayer::HumanPlayer(istream& i, ostream& o) : in_(i), out_(o)
 {
-	string str;
-	do {
-		out_ << "Welcome To Battle Ship!!! What is your name (Max 20 chars)?: ";
-		in_ >> str;
-	} while (str.length() > 20);
+  string str;
+  do {
+    out_ << "Welcome To Battle Ship!!! What is your name (Max 20 chars)?: ";
+    in_ >> str;
+  } while (str.length() > 20);
 
-	n_ = str;
+  n_ = str;
 }
 
 bool HumanPlayer::readUserShotInput_(char *col, char *row)
 {
-	char c;
-    	string str;
+  char c;
+  string str;
 
-    while(in_.get(c) && isdigit(c)) {
-        str.push_back(c);
-	}
+  while(in_.get(c) && isdigit(c)) {
+    str.push_back(c);
+  }
 
-    *row = atoi(str.c_str());
+  *row = atoi(str.c_str());
 
-	if (*row > 10 || *row < 1) {
-		return false;
-	}
+  if (*row > Board::boardSize || *row < 1) {
+    return false;
+  }
 
-	if (isalpha(c)) {
-		*col = toupper(c);
-	} else {
-		return false;
-	}
+  if (isalpha(c)) {
+    *col = toupper(c);
+  }
+  else {
+    return false;
+  }
 
-	if (*col < 'A' || *col > 'J') {
-		return false;
-	}
+  if (*col < 'A' || *col > 'J') {
+    return false;
+  }
 
-	return true;
+  return true;
 }
 
 void HumanPlayer::move(char* c, char* r, Board& board)
 {
-	bool success = false;
-	do {
-		out_ << "Enter your shot (ex. 1A):";
+  bool success = false;
+  do {
+    out_ << "Enter your shot (ex. 1A):";
 
-        while(in_.get() != '\n');
+  while(in_.get() != '\n');
 
-		if (!readUserShotInput_(c, r)) {
-			continue;
-		}
+  if (!readUserShotInput_(c, r)) {
+    continue;
+  }
 
-		success = board.makeAttempt(*c, *r);
+  success = board.makeAttempt(*c, *r);
 
-	} while (!success);
+  } while (!success);
 }

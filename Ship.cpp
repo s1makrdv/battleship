@@ -3,8 +3,7 @@
 
 using namespace std;
 
-bool Ship::checkSize(char size, char col1, char row1, char col2, char row2)
-{
+bool Ship::checkSize(char size, char col1, char row1, char col2, char row2) {
 	if (row1 == row2) {
 		if (col1 > col2) {
 			if ((col1 - col2) + 1 == size) {
@@ -32,8 +31,24 @@ bool Ship::checkSize(char size, char col1, char row1, char col2, char row2)
 	return false;
 }
 
-void buildShipSections(vector<ShipTile>& tiles, char col1, char row1, char col2, char row2)
-{
+
+std::string Ship::type() const {
+    return info_.type;
+}
+
+char Ship::size() const {
+    return info_.size;
+}
+
+std::vector<ShipTile>::iterator Ship::shipBegin() {
+    return sections_.begin();
+}
+
+std::vector<ShipTile>::iterator Ship::shipEnd() {
+    return sections_.end();
+}
+
+void buildShipSections(std::vector<ShipTile>& tiles, char col1, char row1, char col2, char row2) {
 	int i;
 
 	if (row1 == row2) {
@@ -59,14 +74,12 @@ void buildShipSections(vector<ShipTile>& tiles, char col1, char row1, char col2,
 	}
 }
 
-Ship::Ship(const shipInfo& i, char c1, char r1, char c2, char r2)
-{
+Ship::Ship(const shipInfo& i, char c1, char r1, char c2, char r2) {
 	info_ = i;
 	buildShipSections(sections_, c1, r1, c2, r2);
 }
 
-bool Ship::checkHit(char col, char row)
-{
+bool Ship::checkHit(char col, char row) {
 	for (ship_it it = sections_.begin(); it != sections_.end(); ++it) {
 		if ((*it).getCol() == col && (*it).getRow() == row) {
 			(*it).setHit();
@@ -77,8 +90,7 @@ bool Ship::checkHit(char col, char row)
 	return false;
 }
 
-bool Ship::sunk()
-{
+bool Ship::sunk() {
 	for(ship_it it = sections_.begin(); it != sections_.end(); ++it) {
 		if ((*it).getHit() == false)
 			return false;
@@ -86,8 +98,7 @@ bool Ship::sunk()
 	return true;
 }
 
-bool Ship::checkLocation(char col, char row)
-{
+bool Ship::checkLocation(char col, char row) {
 	for (ship_it it = sections_.begin(); it != sections_.end(); ++it) {
 		if ((*it).getCol() == col && (*it).getRow() == row)
 			return true;
@@ -95,48 +106,48 @@ bool Ship::checkLocation(char col, char row)
 	return false;
 }
 
-bool Ship::collision(Ship& s)
-{
-	bool ret = false;
-    for (ship_it it1 = s.sections_.begin(); it1 != s.sections_.end(); ++it1) {
-        for (ship_it it2 = sections_.begin(); it2 != sections_.end(); ++it2) {
-            auto x = (*it1).getCol();
-            auto y = (*it1).getRow();
-            auto i = (*it2).getCol();
-            auto j = (*it2).getRow();
-            //ship's section on existed ship
-            if(	(x == i) && (y == j)) {
-                ret = true;
-            }
-            //ship distance less than one section to existed ship
-            else if(    (x == i + 1) && (y == j + 1)) {
-                ret = true;
-            }
-            else if(    (x == i)     && (y == j + 1)) {
-                ret = true;
-            }
-            else if(    (x == i - 1) && (y == j + 1)) {
-                ret = true;
-            }
-            else if(    (x == i - 1) && (y == j)) {
-                ret = true;
-            }
-            else if(    (x == i - 1) && (y == j - 1)) {
-                ret = true;
-            }
-            else if(    (x == i)     && (y == j - 1)) {
-                ret = true;
-            }
-            else if(    (x == i + 1) && (y == j - 1)) {
-                ret = true;
-            }
-            else if(    (x == i + 1) && (y == j)) {
-                ret = true;
-            }
-            else{
-                //ret = false;
-            }
-        }
+bool Ship::collision(Ship& s) {
+  bool ret = false;
+  for (ship_it it1 = s.sections_.begin(); it1 != s.sections_.end(); ++it1) {
+    for (ship_it it2 = sections_.begin(); it2 != sections_.end(); ++it2) {
+      auto x = (*it1).getCol();
+      auto y = (*it1).getRow();
+      auto i = (*it2).getCol();
+      auto j = (*it2).getRow();
+
+      //ship's section on existed ship
+      if( (x == i) && (y == j)) {
+          ret = true;
+      }
+      //ship distance less than one section to existed ship
+      else if(  (x == i + 1) && (y == j + 1)) {
+        ret = true;
+      }
+      else if(  (x == i)     && (y == j + 1)) {
+        ret = true;
+      }
+      else if(  (x == i - 1) && (y == j + 1)) {
+        ret = true;
+      }
+      else if(  (x == i - 1) && (y == j)) {
+        ret = true;
+      }
+      else if(  (x == i - 1) && (y == j - 1)) {
+        ret = true;
+      }
+      else if(  (x == i)     && (y == j - 1)) {
+        ret = true;
+      }
+      else if(  (x == i + 1) && (y == j - 1)) {
+        ret = true;
+      }
+      else if(  (x == i + 1) && (y == j)) {
+        ret = true;
+      }
+      else{
+        ret = false;
+      }
     }
-	return ret;
+  }
+  return ret;
 }

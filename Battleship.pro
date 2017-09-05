@@ -10,9 +10,9 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 HEADERS += BattleShip.h \
-    ConsoleDisplay.h\
-    Coord.h\
-    Game.h\
+    ConsoleDisplay.h \
+    Coord.h \
+    Game.h \
     Ship.h \
     Board.h \
     BoardTile.h \
@@ -24,8 +24,8 @@ HEADERS += BattleShip.h \
     Tile.h
 
 SOURCES += main.cpp \
-    Ship.cpp\
-    BattleShip.cpp\
+    Ship.cpp \
+    BattleShip.cpp \
     ConsoleDisplay.cpp \
     Board.cpp \
     ComputerPlayer.cpp \

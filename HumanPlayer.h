@@ -6,15 +6,16 @@
 #include "Player.h"
 #include "Board.h"
 
-class HumanPlayer : public Player {
-
-public:
+class HumanPlayer : public Player
+{
+  public:
     HumanPlayer(std::istream& i = std::cin, std::ostream& o = std::cout);
 
     void move(char*, char*, Board& board);
 
-private:
+  private:
     bool readUserShotInput_(char*, char*);
+
     std::istream& in_;
     std::ostream& out_;
 };

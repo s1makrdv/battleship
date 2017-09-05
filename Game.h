@@ -3,36 +3,35 @@
 
 #include <iostream>
 
-class Game {
-public:
-	// Constructor
-    Game() : finished_(false), paused_(false) { }
+class Game
+{
+  public:
+    // Constructor
+    Game() : finished_(false) { }
 
     virtual void gameUpdate() = 0;
 
-    bool gameOver() {
-        return finished_;
-	}
+    // Destructor
+    virtual ~Game() { }
 
-    void gameEnd() {
-        finished_ = true;
-    }
+    bool gameOver() const;
+    void gameEnd();
 
-    bool getPaused() {
-        return paused_;
-    }
-
-    void setPaused() {
-        paused_ = true;
-    }
-
-	// Destructor
-	virtual ~Game() { }
-
-private:
-
+  private:
     bool finished_;
-    bool paused_;
 };
 
+inline bool Game::gameOver() const
+{
+    return finished_;
+}
+
+inline void Game::gameEnd()
+{
+    finished_ = true;
+}
+
 #endif // GAME_H
+
+
+

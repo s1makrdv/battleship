@@ -6,21 +6,27 @@
 #include "Board.h"
 #include "ConsoleDisplay.h"
 
-class Player {
-public:
+class Player
+{
+  public:
     Player() { }
     Player(std::string name) : n_(name) { }
-
-	std::string name() {
-        return n_;
-	}
 
     virtual void move(char* c, char* r, Board& board) = 0;
 
     virtual ~Player() { }
 
-protected:
+    std::string name() const;
+
+  protected:
     std::string n_;
 };
 
+inline std::string Player::name() const
+{
+    return n_;
+}
+
 #endif // PLAYER_H
+
+

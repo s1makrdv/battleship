@@ -9,24 +9,34 @@ public:
     BoardTile() : hit_(false), ship_(false) { }
     BoardTile(char c, char r) : Tile(c, r), hit_(false), ship_(false) { }
 
-	void setHit() {
-        hit_ = true;
-	}
+    bool getHit() const;
+    void setHit();
 
-	bool getHit() {
-        return hit_;
-	}
+    bool getShip() const;
+    void setShip();
 
-	bool getShip() {
-        return ship_;
-	}
-
-	void setShip() {
-        ship_ = true;
-	}
 private:
     bool hit_;
     bool ship_;
 };
 
+inline bool BoardTile::getHit() const {
+    return hit_;
+}
+
+inline void BoardTile::setHit() {
+    hit_ = true;
+}
+
+inline bool BoardTile::getShip() const {
+    return ship_;
+}
+
+inline void BoardTile::setShip() {
+    ship_ = true;
+}
+
 #endif // BOARDTILE_H
+
+
+
