@@ -9,7 +9,6 @@ class Strategy
     typedef enum {NOCHANCE, NOTLIKELY, MAYBE, LIKELY} chance_t;
     typedef enum {NONE, UP, DOWN, LEFT, RIGHT} dir_t;
 
-    // Constructor
     Strategy() :  up_(MAYBE),
                   down_(MAYBE),
                   left_(MAYBE),

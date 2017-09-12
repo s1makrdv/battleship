@@ -6,7 +6,6 @@
 class ShipTile : public Tile
 {
   public:
-    // Constructor
     ShipTile() : h_(false) { }
     ShipTile(char c, char r) : Tile(c, r), h_(false) { }
 

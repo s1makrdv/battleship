@@ -5,7 +5,6 @@
 
 class BoardTile : public Tile {
 public:
-	// Constructors
     BoardTile() : hit_(false), ship_(false) { }
     BoardTile(char c, char r) : Tile(c, r), hit_(false), ship_(false) { }
 

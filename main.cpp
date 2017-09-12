@@ -7,7 +7,7 @@ int main()
 {
     BattleShip bs(cin, cout);
 
-    while(!bs.gameOver()) {
+    while(!bs.isGameOver()) {
         bs.gameUpdate();
     }
 

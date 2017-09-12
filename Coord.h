@@ -3,7 +3,6 @@
 
 typedef struct coord
 {
-  // Constructors
   coord() : col(0), row(0) { }
   coord(char c, char r) : col(c), row(r) { }
 

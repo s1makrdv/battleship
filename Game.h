@@ -6,22 +6,20 @@
 class Game
 {
   public:
-    // Constructor
     Game() : finished_(false) { }
 
     virtual void gameUpdate() = 0;
 
-    // Destructor
     virtual ~Game() { }
 
-    bool gameOver() const;
+    bool isGameOver() const;
     void gameEnd();
 
   private:
     bool finished_;
 };
 
-inline bool Game::gameOver() const
+inline bool Game::isGameOver() const
 {
     return finished_;
 }

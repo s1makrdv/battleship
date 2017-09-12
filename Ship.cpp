@@ -145,7 +145,7 @@ bool Ship::collision(Ship& s) {
         ret = true;
       }
       else{
-        ret = false;
+        ;
       }
     }
   }

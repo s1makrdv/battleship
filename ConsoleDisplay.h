@@ -10,7 +10,6 @@ class ConsoleDisplay
     typedef std::vector<std::vector<std::string> >::iterator screenIt_t;
     typedef std::vector<std::string>::iterator panelIt_t;
 
-    // Constructor
     ConsoleDisplay(const char w_[], const char panels, const char height);
 
     void clear();
