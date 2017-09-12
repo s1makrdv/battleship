@@ -7,9 +7,9 @@ Tile::Tile() :
 
 }
 
-Tile::Tile(char c, char r) :
-  col_(c),
-  row_(r)
+Tile::Tile(char col, char row) :
+  col_(col),
+  row_(row)
 {
 
 }

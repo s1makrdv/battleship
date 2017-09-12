@@ -31,9 +31,9 @@ string const boardHit = "X";
 
 string const legend =	"---Legend---   \nO Ship         \n@ Ship with hit\nX Missed Attack\n";
 
-Board::Board(istream& i, ostream& o) :
-                        in_(i),
-                        out_(o)
+Board::Board(istream& in, ostream& out) :
+                        in_(in),
+                        out_(out)
 {
   for (int row = 1; row < 1 + boardSize; ++row) {
     for(int col = 'A'; col < 'A' + boardSize; ++col) {
@@ -128,39 +128,39 @@ bool readUserShipInput(istream& in
                        , char *col2
                        , char *row2)
 {
-  char c;
+  char tempChar;
   string str;
 
-  while(in.get(c) && isdigit(c)) {
-    str.push_back(c);
+  while(in.get(tempChar) && isdigit(tempChar)) {
+    str.push_back(tempChar);
   }
 
   *row1 = atoi(str.c_str());
 
   str.clear();
 
-  if (isalpha(c)) {
-    *col1 = toupper(c);
+  if (isalpha(tempChar)) {
+    *col1 = toupper(tempChar);
   }
   else {
     return false;
   }
 
-  in.get(c); // consume space
+  in.get(tempChar); // consume space
 
-  if (c != ' ')
+  if (tempChar != ' ')
     return false;
 
-  while(in.get(c) && isdigit(c)){
-    str.push_back(c);
+  while(in.get(tempChar) && isdigit(tempChar)){
+    str.push_back(tempChar);
   }
 
   *row2 = atoi(str.c_str());
 
   str.clear();
 
-  if (isalpha(c)) {
-    *col2 = toupper(c);
+  if (isalpha(tempChar)) {
+    *col2 = toupper(tempChar);
   }
   else {
     return false;
@@ -169,10 +169,10 @@ bool readUserShipInput(istream& in
   return true;
 }
 
-bool isOffBoard(char c1, char r1, char c2, char r2)
+bool isOffBoard(char col1, char row1, char col2, char row2)
 {
-  if(r1 < 1 || r1 > 10 || r2 < 1 || r2 > 10 ||
-     c1 < 'A' || c1 > 'J' || c2 < 'A' || c2 > 'J'){
+  if(row1 < 1 || row1 > 10 || row2 < 1 || row2 > 10 ||
+     col1 < 'A' || col1 > 'J' || col2 < 'A' || col2 > 'J'){
     return true;
   }
   else {
@@ -334,7 +334,8 @@ void Board::markHit(char c, char r)
   attackGrid_[i].setShip(); // Marks a ship in this tile
 }
 
-bool Board::fleetSunk() {
+bool Board::isSunkFleet()
+{
   vector<Ship>::iterator s_it;
   for (s_it = ships_.begin(); s_it != ships_.end(); ++s_it) {
     if (!(*s_it).sunk()) {

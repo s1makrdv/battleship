@@ -9,9 +9,9 @@
 class HumanPlayer : public Player
 {
   public:
-    HumanPlayer(std::istream& i = std::cin, std::ostream& o = std::cout);
+    HumanPlayer(std::istream& in = std::cin, std::ostream& out = std::cout);
 
-    void move(char*, char*, Board& board);
+    void move(char*col, char*row, Board& board);
 
   private:
     bool readUserShotInput_(char*, char*);

@@ -5,7 +5,7 @@ class Tile
 {
   public:
     Tile();
-    Tile(char c, char r);
+    Tile(char col, char row);
 
     char getCol() const;
     char getRow() const;

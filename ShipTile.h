@@ -7,7 +7,7 @@ class ShipTile : public Tile
 {
   public:
     ShipTile();
-    ShipTile(char c, char r);
+    ShipTile(char col, char row);
 
     bool getHit() const;
     void setHit();

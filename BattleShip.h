@@ -9,8 +9,15 @@
 #include "Board.h"
 #include "ConsoleDisplay.h"
 
-static const char screenPanels[] = {30, 30, 60};
-static const char screenHeight = 40;
+static const char screenHeight = 60;
+
+const int leftPanelWidth = 30;
+const int rightPanelWidth = 30;
+
+static const char screenPanels[] = { leftPanelWidth,
+                                     rightPanelWidth,
+                                     screenHeight };
+
 
 class BattleShip : public Game
 {
@@ -23,16 +30,19 @@ class BattleShip : public Game
     std::istream& in_;
     std::ostream& out_;
     ConsoleDisplay display_;
-    Board p1Board_, p2Board_;
+    Board firstPlayerBoard_, secondPlayerBoard_;
 
-    HumanPlayer p1_;
-    ComputerPlayer p2_;
+    HumanPlayer firstPlayer_;
+    ComputerPlayer secondPlayer_;
 
-    uint8_t p1_step_;
-    uint8_t p2_step_;
+    uint8_t firstPlayerStep_;
+    uint8_t secondPlayerStep_;
 
-    bool p1_success_;
-    bool p2_success_;
+    bool isFirstPlayerSuccess_;
+    bool isSecondPlayerSuccess_;
+
+    char column_, row_;
+    std::string shipName_;
 };
 
 #endif // BATTLESHIP_H

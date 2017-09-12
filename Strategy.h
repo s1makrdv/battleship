@@ -12,8 +12,8 @@ class Strategy
     Strategy();
 
     bool isValid();
-    void update(char c, char r);
-    bool getMove(char* c, char* r);
+    void update(char col, char row);
+    bool getMove(char* col, char* row);
 
   private:
     void reset_();

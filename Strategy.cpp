@@ -10,10 +10,10 @@ Strategy::Strategy() :
 
 }
 
-void Strategy::update(char c, char r)
+void Strategy::update(char col, char row)
 {
   if (!isValid()) {
-    set_(c, r);
+    set_(col, row);
   }
   else {
     isSuccessful_ = true;
@@ -53,15 +53,15 @@ void Strategy::reset_()
   last_dir_ = NONE;
 }
 
-void Strategy::set_(char c, char r)
+void Strategy::set_(char col, char row)
 {
-  firstTry_.col = c;
-  firstTry_.row = r;
-  lastTry_.col = c;
-  lastTry_.row = r;
+  firstTry_.col = col;
+  firstTry_.row = row;
+  lastTry_.col = col;
+  lastTry_.row = row;
 }
 
-bool Strategy::getMove(char *c, char *r)
+bool Strategy::getMove(char* col, char* row)
 {
   if (!isSuccessful_) {
     if (UP == last_dir_) {
@@ -141,8 +141,8 @@ bool Strategy::getMove(char *c, char *r)
     }
   }
 
-  *c = lastTry_.col;
-  *r = lastTry_.row;
+  *col = lastTry_.col;
+  *row = lastTry_.row;
   isSuccessful_ = false;
 
   return true;

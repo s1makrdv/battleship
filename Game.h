@@ -6,7 +6,7 @@
 class Game
 {
   public:
-    Game() : finished_(false) { }
+    Game();
 
     virtual void gameUpdate() = 0;
 
@@ -18,16 +18,6 @@ class Game
   private:
     bool finished_;
 };
-
-inline bool Game::isGameOver() const
-{
-    return finished_;
-}
-
-inline void Game::gameEnd()
-{
-    finished_ = true;
-}
 
 #endif // GAME_H
 

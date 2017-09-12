@@ -15,23 +15,23 @@ class Board
     static int const boardSize = 10;
 
     const std::vector<Ship::shipInfo> shipTypes = {{ "Four-deck", 4},
-                              { "Three-deck", 3},
-                              { "Three-deck", 3},
-                              { "Double-deck", 2},
-                              { "Double-deck", 2},
-                              { "Double-deck", 2},
-                              { "Single-deck", 1},
-                              { "Single-deck", 1},
-                              { "Single-deck", 1},
-                              { "Single-deck", 1}};
+                                                   { "Three-deck", 3},
+                                                   { "Three-deck", 3},
+                                                   { "Double-deck", 2},
+                                                   { "Double-deck", 2},
+                                                   { "Double-deck", 2},
+                                                   { "Single-deck", 1},
+                                                   { "Single-deck", 1},
+                                                   { "Single-deck", 1},
+                                                   { "Single-deck", 1}};
 
-    Board(std::istream& i, std::ostream& o);
+    Board(std::istream& in, std::ostream& out);
 
     void placeShips();
     bool makeAttempt(char c, char r);
     bool checkShot(char c, char r, std::string& str);
     void markHit(char c, char r);
-    bool fleetSunk();
+    bool isSunkFleet();
     void writeShipGrid(ConsoleDisplay& display);
     void writeAttackGrid(ConsoleDisplay& display);
 

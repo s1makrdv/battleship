@@ -85,10 +85,10 @@ void buildShipSections(std::vector<ShipTile>& tiles, char col1, char row1, char 
   }
 }
 
-Ship::Ship(const shipInfo& i, char c1, char r1, char c2, char r2)
+Ship::Ship(const shipInfo& i, char col1, char row, char col2, char row2)
 {
   info_ = i;
-  buildShipSections(sections_, c1, r1, c2, r2);
+  buildShipSections(sections_, col1, row, col2, row2);
 }
 
 bool Ship::checkHit(char col, char row)
@@ -122,20 +122,19 @@ bool Ship::checkLocation(char col, char row)
   return false;
 }
 
-bool Ship::collision(Ship& s)
+bool Ship::collision(Ship& ship)
 {
   bool ret = false;
-  for (ship_it it1 = s.sections_.begin(); it1 != s.sections_.end(); ++it1) {
+  for (ship_it it1 = ship.sections_.begin(); it1 != ship.sections_.end(); ++it1) {
     for (ship_it it2 = sections_.begin(); it2 != sections_.end(); ++it2) {
       auto x = (*it1).getCol();
       auto y = (*it1).getRow();
       auto i = (*it2).getCol();
       auto j = (*it2).getRow();
 
-      if( (x == i) && (y == j)) {
+      if(       (x == i)     && (y == j)) {
           ret = true;
       }
-
       else if(  (x == i + 1) && (y == j + 1)) {
         ret = true;
       }

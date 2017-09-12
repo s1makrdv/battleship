@@ -10,7 +10,7 @@ class Player
 {
   public:
     Player() { }
-    Player(std::string name) : n_(name) { }
+    Player(std::string name) : name_(name) { }
 
     virtual void move(char* c, char* r, Board& board) = 0;
 
@@ -18,13 +18,20 @@ class Player
 
     std::string name() const;
 
-  protected:
-    std::string n_;
+    void setName(const std::string& name);
+
+  private:
+    std::string name_;
 };
 
 inline std::string Player::name() const
 {
-    return n_;
+  return name_;
+}
+
+inline void Player::setName(const std::string& name)
+{
+  name_ = name;
 }
 
 #endif // PLAYER_H

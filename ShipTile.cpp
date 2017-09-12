@@ -7,8 +7,8 @@ ShipTile::ShipTile() :
 
 }
 
-ShipTile::ShipTile(char c, char r) :
-  Tile(c, r),
+ShipTile::ShipTile(char col, char row) :
+  Tile(col, row),
   h_(false)
 {
 

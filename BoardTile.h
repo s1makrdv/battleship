@@ -5,8 +5,8 @@
 
 class BoardTile : public Tile {
 public:
-    BoardTile() : hit_(false), ship_(false) { }
-    BoardTile(char c, char r) : Tile(c, r), hit_(false), ship_(false) { }
+    BoardTile();
+    BoardTile(char c, char r);
 
     bool getHit() const;
     void setHit();
@@ -19,21 +19,13 @@ private:
     bool ship_;
 };
 
-inline bool BoardTile::getHit() const {
-    return hit_;
-}
 
-inline void BoardTile::setHit() {
-    hit_ = true;
-}
 
-inline bool BoardTile::getShip() const {
-    return ship_;
-}
 
-inline void BoardTile::setShip() {
-    ship_ = true;
-}
+
+
+
+
 
 #endif // BOARDTILE_H
 

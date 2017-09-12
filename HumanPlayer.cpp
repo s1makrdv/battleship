@@ -5,7 +5,9 @@
 
 using namespace std;
 
-HumanPlayer::HumanPlayer(istream& i, ostream& o) : in_(i), out_(o)
+HumanPlayer::HumanPlayer(istream& in, ostream& out) :
+  in_(in),
+  out_(out)
 {
   string str;
   do {
@@ -13,16 +15,16 @@ HumanPlayer::HumanPlayer(istream& i, ostream& o) : in_(i), out_(o)
     in_ >> str;
   } while (str.length() > 20);
 
-  n_ = str;
+  setName(str);
 }
 
-bool HumanPlayer::readUserShotInput_(char *col, char *row)
+bool HumanPlayer::readUserShotInput_(char* col, char* row)
 {
-  char c;
+  char tempChar;
   string str;
 
-  while(in_.get(c) && isdigit(c)) {
-    str.push_back(c);
+  while(in_.get(tempChar) && isdigit(tempChar)) {
+    str.push_back(tempChar);
   }
 
   *row = atoi(str.c_str());
@@ -31,8 +33,8 @@ bool HumanPlayer::readUserShotInput_(char *col, char *row)
     return false;
   }
 
-  if (isalpha(c)) {
-    *col = toupper(c);
+  if (isalpha(tempChar)) {
+    *col = toupper(tempChar);
   }
   else {
     return false;
@@ -45,7 +47,7 @@ bool HumanPlayer::readUserShotInput_(char *col, char *row)
   return true;
 }
 
-void HumanPlayer::move(char* c, char* r, Board& board)
+void HumanPlayer::move(char* col, char* row, Board& board)
 {
   bool success = false;
   do {
@@ -53,11 +55,11 @@ void HumanPlayer::move(char* c, char* r, Board& board)
 
   while(in_.get() != '\n');
 
-  if (!readUserShotInput_(c, r)) {
+  if (!readUserShotInput_(col, row)) {
     continue;
   }
 
-  success = board.makeAttempt(*c, *r);
+  success = board.makeAttempt(*col, *row);
 
   } while (!success);
 }
