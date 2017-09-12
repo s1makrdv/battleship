@@ -22,8 +22,8 @@ class Ship
 
     char size() const;
 
-    std::vector<ShipTile>::iterator shipBegin() ;
-    std::vector<ShipTile>::iterator shipEnd() ;
+    ship_it shipBegin() ;
+    ship_it shipEnd() ;
 
     bool collision(Ship&);
     bool sunk();

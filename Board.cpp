@@ -32,15 +32,14 @@ string const boardHit = "X";
 string const legend =	"---Legend---   \nO Ship         \n@ Ship with hit\nX Missed Attack\n";
 
 Board::Board(istream& i, ostream& o) :
-			in_(i), out_(o)
+                        in_(i),
+                        out_(o)
 {
-  // Initialize shipGrid
   for (int row = 1; row < 1 + boardSize; ++row) {
     for(int col = 'A'; col < 'A' + boardSize; ++col) {
       shipGrid_.push_back(BoardTile(col, row));
     }
   }
-  // Initialize attackGrid
   for (int row = 1; row < 1 + boardSize; ++row) {
     for(int col = 'A'; col < 'A' + boardSize; ++col) {
       attackGrid_.push_back(BoardTile(col, row));
@@ -72,7 +71,7 @@ string displayTile(BoardTile& tile)
       return "";
   }
 
-  return "";//TEMPORARY FIX
+  return "";//TODO
 }
 
 void Board::writeShipGrid(ConsoleDisplay& display)
@@ -170,7 +169,7 @@ bool readUserShipInput(istream& in
   return true;
 }
 
-bool offBoard(char c1, char r1, char c2, char r2)
+bool isOffBoard(char c1, char r1, char c2, char r2)
 {
   if(r1 < 1 || r1 > 10 || r2 < 1 || r2 > 10 ||
      c1 < 'A' || c1 > 'J' || c2 < 'A' || c2 > 'J'){
@@ -181,7 +180,7 @@ bool offBoard(char c1, char r1, char c2, char r2)
   }
 }
 
-bool Board::shipCollision_(Ship& ship)
+bool Board::isShipCollision_(Ship& ship)
 {
   vector<Ship>::iterator vs_it;
 
@@ -211,7 +210,6 @@ void Board::shipPlacementRandom_(const Ship::shipInfo& info)
   std::list<coord_t>::iterator c_it;
 
   if (!initialized) {
-    // Initialize a list of the shipGrid coordinates
     for (int r = 1; r < 1 + Board::boardSize; ++r) {
       for (int c = 'A'; c < 'A' + Board::boardSize; ++c) {
         coords.push_back(coord_t(c, r));
@@ -219,7 +217,7 @@ void Board::shipPlacementRandom_(const Ship::shipInfo& info)
     }
 
     initialized = true;
-    // Seed rand
+
     srand(time(0));
   }
 
@@ -268,7 +266,7 @@ void Board::shipPlacementRandom_(const Ship::shipInfo& info)
           while(1);
       }
 
-      if (offBoard(c1, r1, c2, r2)) {
+      if (isOffBoard(c1, r1, c2, r2)) {
         continue;
       }
 
@@ -278,7 +276,7 @@ void Board::shipPlacementRandom_(const Ship::shipInfo& info)
 
       Ship s(info, c1, r1, c2, r2);
 
-      if (shipCollision_(s)) {
+      if (isShipCollision_(s)) {
         continue;
       }
       else {

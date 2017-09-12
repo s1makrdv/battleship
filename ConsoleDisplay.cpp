@@ -5,8 +5,13 @@
 
 using namespace std;
 
-ConsoleDisplay::ConsoleDisplay(const char widths[], const char panels, const char height) :
-				w_(widths, widths + panels), h_(height), p_(panels), lastRow_(0)
+ConsoleDisplay::ConsoleDisplay(const char widths[],
+                               const char panels,
+                               const char height) :
+                                 w_(widths, widths + panels),
+                                 h_(height),
+                                 p_(panels),
+                                 lastRow_(0)
 {
   for (int i = 0; i < p_; ++i)
     screen_.push_back(vector<string>());
@@ -33,14 +38,15 @@ void ConsoleDisplay::refresh()
   vector<string> screenOut(lastRow_ + 1);
 
   char panel = 0;
-  // Build up the output
+
   for (screenIt_t s_it = screen_.begin(); s_it != screen_.end(); ++s_it) {
     panelIt_t p_it = (*s_it).begin();
     for (panelIt_t scrOut_it = screenOut.begin(); scrOut_it != screenOut.end(); ++scrOut_it) {
       try {
         // Append panel string plus padding
         (*scrOut_it) += ((*p_it) + string(w_[panel] - (*p_it).length(), ' ') + "  ");
-      } catch (const length_error& le) {
+      }
+      catch (const length_error& le) {
         (*scrOut_it) += ((*p_it) + "  ");
       }
       ++p_it;
@@ -58,8 +64,8 @@ void ConsoleDisplay::refresh()
 }
 
 void ConsoleDisplay::write(const unsigned char panel,
-				const unsigned char row,
-				const string& str)
+                           const unsigned char row,
+                           const string& str)
 {
   if (panel >= p_)
     return;

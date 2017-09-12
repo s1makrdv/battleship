@@ -1,14 +1,22 @@
 #include "Strategy.h"
-/*
-	Called on a successful hit
-*/
+
+Strategy::Strategy() :
+  up_(MAYBE),
+  down_(MAYBE),
+  left_(MAYBE),
+  right_(MAYBE),
+  last_dir_(NONE)
+{
+
+}
+
 void Strategy::update(char c, char r)
 {
-  if (!valid()) {
+  if (!isValid()) {
     set_(c, r);
   }
   else {
-    successful_ = true;
+    isSuccessful_ = true;
     if (UP == last_dir_ || DOWN == last_dir_) {
       left_ = NOTLIKELY;
       right_ = NOTLIKELY;
@@ -20,7 +28,7 @@ void Strategy::update(char c, char r)
   }
 }
 
-bool Strategy::valid()
+bool Strategy::isValid()
 {
   if (firstTry_.col) {
     return true;
@@ -41,7 +49,7 @@ void Strategy::reset_()
   down_ = MAYBE;
   left_ = MAYBE;
   right_ = MAYBE;
-  successful_ = true;
+  isSuccessful_ = true;
   last_dir_ = NONE;
 }
 
@@ -55,7 +63,7 @@ void Strategy::set_(char c, char r)
 
 bool Strategy::getMove(char *c, char *r)
 {
-  if (!successful_) {
+  if (!isSuccessful_) {
     if (UP == last_dir_) {
       up_ = NOTLIKELY;
     }
@@ -135,7 +143,7 @@ bool Strategy::getMove(char *c, char *r)
 
   *c = lastTry_.col;
   *r = lastTry_.row;
-  successful_ = false;
+  isSuccessful_ = false;
 
   return true;
 }

@@ -5,11 +5,11 @@ using namespace std;
 
 int main()
 {
-    BattleShip bs(cin, cout);
+  BattleShip bs(cin, cout);
 
-    while(!bs.isGameOver()) {
-        bs.gameUpdate();
-    }
+  while(!bs.isGameOver()) {
+    bs.gameUpdate();
+  }
 
-    return 0;
+  return 0;
 }

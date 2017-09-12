@@ -7,13 +7,12 @@ using namespace std;
 
 ComputerPlayer::ComputerPlayer(std::string name) : Player(name)
 {
-  // Initialize a list of the board coordinates
   for (int r = 1; r < 1 + Board::boardSize; ++r) {
     for (int c = 'A'; c < 'A' + Board::boardSize; ++c) {
       coords_.push_back(coord_t(c, r));
     }
   }
-  // Seed rand
+
   srand(time(0));
 }
 
@@ -23,7 +22,7 @@ void ComputerPlayer::move(char *c, char *r, Board& board)
 
   bool success = false;
 
-  while (!success && strategy_.valid()) { // Use apriori knowlege
+  while (!success && strategy_.isValid()) { // Use apriori knowlege
     strategy_.getMove(c, r);
     for (c_it = coords_.begin(); c_it != coords_.end(); ++c_it) {
       if (*c == (*c_it).col && *r == (*c_it).row) {
@@ -34,7 +33,7 @@ void ComputerPlayer::move(char *c, char *r, Board& board)
     }
   }
 
-  if (!success) { // Select random coordinate
+  if (!success) {
     int count = (rand() % coords_.size());
     c_it = coords_.begin();
 

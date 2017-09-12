@@ -6,8 +6,8 @@
 class ShipTile : public Tile
 {
   public:
-    ShipTile() : h_(false) { }
-    ShipTile(char c, char r) : Tile(c, r), h_(false) { }
+    ShipTile();
+    ShipTile(char c, char r);
 
     bool getHit() const;
     void setHit();
@@ -16,15 +16,9 @@ class ShipTile : public Tile
     bool h_;
 };
 
-inline bool ShipTile::getHit() const
-{
-    return h_;
-}
 
-inline void ShipTile::setHit()
-{
-    h_ = true;
-}
+
+
 
 #endif // SHIPTILE_H
 

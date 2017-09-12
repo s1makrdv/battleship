@@ -31,7 +31,8 @@ SOURCES += main.cpp \
     ComputerPlayer.cpp \
     HumanPlayer.cpp \
     Strategy.cpp \
-    Tile.cpp
+    Tile.cpp \
+    ShipTile.cpp
 
 
 DEFINES += QT_DEPRECATED_WARNINGS

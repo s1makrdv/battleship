@@ -36,7 +36,7 @@ class Board
     void writeAttackGrid(ConsoleDisplay& display);
 
   private:
-    bool shipCollision_(Ship&);
+    bool isShipCollision_(Ship&);
     void shipPlacementPrompt_(const Ship::shipInfo&, ConsoleDisplay& display);
     void shipPlacementRandom_(const Ship::shipInfo&);
     void markBoard_(Ship&);
