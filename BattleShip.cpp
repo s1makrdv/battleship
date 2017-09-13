@@ -36,54 +36,66 @@ void BattleShip::gameUpdate()
 
   display_.clear();
 
-  if(firstPlayer_.isSuccess() && !secondPlayer_.isSuccess() ){
-    firstPlayer_.move(&column_, &row_, firstPlayerBoard_);
-    firstPlayer_.setStepNo();
-    if (secondPlayerBoard_.checkShot(column_, row_, shipName_)) {
-      display_.write(2, firstPlayer_.name() + " hit " + secondPlayer_.name() + "'s" + " " + shipName_);
-      firstPlayerBoard_.markHit(column_, row_);
-    }
-    else{
-      display_.write(2, firstPlayer_.name() + " missed!!!");
-      firstPlayer_.setIsSuccess(false);
-      secondPlayer_.setIsSuccess(true);
-    }
-  }
+  playerStep_(firstPlayerBoard_,
+              secondPlayerBoard_,
+              firstPlayer_,
+              secondPlayer_);
 
-  if( !firstPlayer_.isSuccess() && secondPlayer_.isSuccess() ){
-    secondPlayer_.move(&column_, &row_, secondPlayerBoard_);
-    secondPlayer_.setStepNo();
-    if (firstPlayerBoard_.checkShot(column_, row_, shipName_)) {
-      display_.write(2, secondPlayer_.name() + " hit " + firstPlayer_.name() + "'s" + " " + shipName_);
-      secondPlayerBoard_.markHit(column_, row_);
-      secondPlayer_.update(column_, row_);
-    }
-    else{
-      display_.write(2, "Computer missed!!!");
-      firstPlayer_.setIsSuccess(true);
-      secondPlayer_.setIsSuccess(false);
-    }
-  }
+  playerStep_(secondPlayerBoard_,
+              firstPlayerBoard_,
+              secondPlayer_,
+              firstPlayer_);
 
-  display_.write(firstPlayer_.name() + " make: " + to_string(firstPlayer_.stepNo()) + " shoot's");
-  display_.write(secondPlayer_.name() + " make: " + to_string(secondPlayer_.stepNo()) + " shoot's\n ");
+  display_.write(firstPlayer_.name() +
+                 " make: " +
+                 to_string(firstPlayer_.stepNo()) +
+                 " shoot's");
 
-  if (secondPlayerBoard_.isSunkFleet()) {
-    secondPlayerBoard_.writeShipGrid(display_);
-    firstPlayerBoard_.writeAttackGrid(display_);
-    display_.write(2, firstPlayer_.name() + " wins!!!");
+  display_.write(secondPlayer_.name() +
+                 " make: " +
+                 to_string(secondPlayer_.stepNo()) +
+                 " shoot's\n ");
+
+  checkFleetSunk_(firstPlayerBoard_, secondPlayerBoard_, firstPlayer_);
+  checkFleetSunk_(secondPlayerBoard_, firstPlayerBoard_, secondPlayer_);
+
+
+
+}
+
+void BattleShip::checkFleetSunk_(Board& firstBoard, Board& secondBoard, Player& player)
+{
+  if (firstBoard.isSunkFleet()) {
+    secondBoard.writeShipGrid(display_);
+    secondBoard.writeAttackGrid(display_);
+    display_.write(2, player.name() + " wins!!!");
     display_.refresh();
     gameEnd();
-    return;
   }
+}
 
-  if (firstPlayerBoard_.isSunkFleet()) {
-    firstPlayerBoard_.writeShipGrid(display_);
-    firstPlayerBoard_.writeAttackGrid(display_);
-    display_.write(2, secondPlayer_.name() + " wins!!!");
-    display_.refresh();
-    gameEnd();
-    return;
+void BattleShip::playerStep_(Board& firstBoard,
+                             Board& secondBoard,
+                             Player& firstPlayer,
+                             Player& secondPlayer)
+{
+  if(firstPlayer.isSuccess() && !secondPlayer.isSuccess() ){
+    firstPlayer.move(&column_, &row_, firstBoard);
+    firstPlayer.setStepNo();
+    if (secondBoard.checkShot(column_, row_, shipName_)) {
+      display_.write(2, firstPlayer.name() + " hit " +
+                     secondPlayer.name() +
+                     "'s" + " " +
+                     shipName_);
+
+      firstBoard.markHit(column_, row_);
+      secondPlayer.update(column_, row_);
+    }
+    else{
+      display_.write(2, firstPlayer.name() + " missed!!!");
+      firstPlayer.setIsSuccess(false);
+      secondPlayer.setIsSuccess(true);
+    }
   }
 }
 

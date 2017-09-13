@@ -11,7 +11,8 @@ class HumanPlayer : public Player
   public:
     HumanPlayer(std::istream& in = std::cin, std::ostream& out = std::cout);
 
-    void move(char*col, char*row, Board& board);
+    void move(char*col, char*row, Board& board) override;
+    void update(char c, char r) override;
 
   private:
     bool readUserShotInput_(char*, char*);

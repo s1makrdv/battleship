@@ -40,7 +40,13 @@ class BattleShip : public Game
     char column_, row_;
 
     std::string shipName_;
-
+    void checkFleetSunk_(Board& firstBoard,
+                         Board& secondBoard,
+                         Player& player);
+    void playerStep_(Board& firstBoard,
+                     Board& secondBoard,
+                     Player& firstPlayer,
+                     Player& secondPlayer);
 };
 
 #endif // BATTLESHIP_H

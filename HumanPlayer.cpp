@@ -65,3 +65,8 @@ void HumanPlayer::move(char* col, char* row, Board& board)
 
   } while (!isSuccess);
 }
+
+void HumanPlayer::update(char c, char r)
+{
+
+}
