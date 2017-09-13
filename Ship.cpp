@@ -132,36 +132,14 @@ bool Ship::collision(Ship& ship)
       auto i = (*it2).getCol();
       auto j = (*it2).getRow();
 
-      if(       (x == i)     && (y == j)) {
-          ret = true;
+      for(int k = - 1; k < 2 ; ++k){
+        for(int n = -1; n < 2 ; ++n){
+          if((x == (i + k))&&((y == (j + n)))){
+            return true;
+          }
+        }
       }
-      else if(  (x == i + 1) && (y == j + 1)) {
-        ret = true;
-      }
-      else if(  (x == i)     && (y == j + 1)) {
-        ret = true;
-      }
-      else if(  (x == i - 1) && (y == j + 1)) {
-        ret = true;
-      }
-      else if(  (x == i - 1) && (y == j)) {
-        ret = true;
-      }
-      else if(  (x == i - 1) && (y == j - 1)) {
-        ret = true;
-      }
-      else if(  (x == i)     && (y == j - 1)) {
-        ret = true;
-      }
-      else if(  (x == i + 1) && (y == j - 1)) {
-        ret = true;
-      }
-      else if(  (x == i + 1) && (y == j)) {
-        ret = true;
-      }
-      else{
-        ;
-      }
+
     }
   }
   return ret;
