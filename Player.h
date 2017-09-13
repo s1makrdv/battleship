@@ -9,8 +9,8 @@
 class Player
 {
   public:
-    Player() { }
-    Player(std::string name) : name_(name) { }
+    Player();
+    Player(std::string name);
 
     virtual void move(char* c, char* r, Board& board) = 0;
 
@@ -24,15 +24,6 @@ class Player
     std::string name_;
 };
 
-inline std::string Player::name() const
-{
-  return name_;
-}
-
-inline void Player::setName(const std::string& name)
-{
-  name_ = name;
-}
 
 #endif // PLAYER_H
 
