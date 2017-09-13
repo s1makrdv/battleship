@@ -128,39 +128,39 @@ bool readUserShipInput(istream& in
                        , char *col2
                        , char *row2)
 {
-  char tempChar;
+  char c;
   string str;
 
-  while(in.get(tempChar) && isdigit(tempChar)) {
-    str.push_back(tempChar);
+  while(in.get(c) && isdigit(c)) {
+    str.push_back(c);
   }
 
   *row1 = atoi(str.c_str());
 
   str.clear();
 
-  if (isalpha(tempChar)) {
-    *col1 = toupper(tempChar);
+  if (isalpha(c)) {
+    *col1 = toupper(c);
   }
   else {
     return false;
   }
 
-  in.get(tempChar); // consume space
+  in.get(c); // consume space
 
-  if (tempChar != ' ')
+  if (c != ' ')
     return false;
 
-  while(in.get(tempChar) && isdigit(tempChar)){
-    str.push_back(tempChar);
+  while(in.get(c) && isdigit(c)){
+    str.push_back(c);
   }
 
   *row2 = atoi(str.c_str());
 
   str.clear();
 
-  if (isalpha(tempChar)) {
-    *col2 = toupper(tempChar);
+  if (isalpha(c)) {
+    *col2 = toupper(c);
   }
   else {
     return false;
@@ -185,7 +185,7 @@ bool Board::isShipCollision_(Ship& ship)
   vector<Ship>::iterator vs_it;
 
   for (vs_it = ships_.begin(); vs_it != ships_.end(); ++vs_it) {
-    if ((*vs_it).collision(ship)) {
+    if ((*vs_it).isCollision(ship)) {
       return true;
     }
   }
@@ -206,23 +206,23 @@ vector<ShipTile>::iterator s_it;
 void Board::shipPlacementRandom_(const Ship::shipInfo& info)
 {
   static std::list<coord_t> coords;
-  static bool initialized = false;
+  static bool isInitialized = false;
   std::list<coord_t>::iterator c_it;
 
-  if (!initialized) {
+  if (!isInitialized) {
     for (int r = 1; r < 1 + Board::boardSize; ++r) {
       for (int c = 'A'; c < 'A' + Board::boardSize; ++c) {
         coords.push_back(coord_t(c, r));
       }
     }
 
-    initialized = true;
+    isInitialized = true;
 
     srand(time(0));
   }
 
-  bool success = false;
-  while (!success) {
+  bool isSuccess = false;
+  while (!isSuccess) {
     // Select random coordinate
     int count = (rand() % coords.size());
     c_it = coords.begin();
@@ -283,10 +283,10 @@ void Board::shipPlacementRandom_(const Ship::shipInfo& info)
         ships_.push_back(s);
         markBoard_(s);
         coords.erase(c_it); // Delete coordinate
-        success = true;
+        isSuccess = true;
       }
 
-    } while (!success && ++i < 4);
+    } while (!isSuccess && ++i < 4);
   }
 }
 
@@ -338,7 +338,7 @@ bool Board::isSunkFleet()
 {
   vector<Ship>::iterator s_it;
   for (s_it = ships_.begin(); s_it != ships_.end(); ++s_it) {
-    if (!(*s_it).sunk()) {
+    if (!(*s_it).isSunk()) {
       return false;
     }
   }

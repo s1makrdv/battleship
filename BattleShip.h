@@ -29,10 +29,12 @@ class BattleShip : public Game
   private:
     std::istream& in_;
     std::ostream& out_;
+
     ConsoleDisplay display_;
+
     Board firstPlayerBoard_, secondPlayerBoard_;
 
-    HumanPlayer firstPlayer_;
+    HumanPlayer    firstPlayer_;
     ComputerPlayer secondPlayer_;
 
     uint8_t firstPlayerStep_;
@@ -42,6 +44,7 @@ class BattleShip : public Game
     bool isSecondPlayerSuccess_;
 
     char column_, row_;
+
     std::string shipName_;
 };
 

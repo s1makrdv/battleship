@@ -20,20 +20,20 @@ void ComputerPlayer::move(char *c, char *r, Board& board)
 {
   list<coord_t>::iterator c_it;
 
-  bool success = false;
+  bool isSuccess = false;
 
-  while (!success && strategy_.isValid()) { // Use apriori knowlege
+  while (!isSuccess && strategy_.isValid()) { // Use apriori knowlege
     strategy_.getMove(c, r);
     for (c_it = coords_.begin(); c_it != coords_.end(); ++c_it) {
       if (*c == (*c_it).col && *r == (*c_it).row) {
-        success = true;
+        isSuccess = true;
         coords_.erase(c_it);
         break;
       }
     }
   }
 
-  if (!success) {
+  if (!isSuccess) {
     int count = (rand() % coords_.size());
     c_it = coords_.begin();
 

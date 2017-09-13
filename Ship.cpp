@@ -103,7 +103,7 @@ bool Ship::checkHit(char col, char row)
   return false;
 }
 
-bool Ship::sunk()
+bool Ship::isSunk()
 {
   for(ship_it it = sections_.begin(); it != sections_.end(); ++it) {
     if ((*it).getHit() == false)
@@ -122,9 +122,8 @@ bool Ship::checkLocation(char col, char row)
   return false;
 }
 
-bool Ship::collision(Ship& ship)
+bool Ship::isCollision(Ship& ship)
 {
-  bool ret = false;
   for (ship_it it1 = ship.sections_.begin(); it1 != ship.sections_.end(); ++it1) {
     for (ship_it it2 = sections_.begin(); it2 != sections_.end(); ++it2) {
       auto x = (*it1).getCol();
@@ -142,5 +141,5 @@ bool Ship::collision(Ship& ship)
 
     }
   }
-  return ret;
+  return false;
 }

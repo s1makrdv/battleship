@@ -25,8 +25,8 @@ class Ship
     ship_it shipBegin() ;
     ship_it shipEnd() ;
 
-    bool collision(Ship&);
-    bool sunk();
+    bool isCollision(Ship&);
+    bool isSunk();
     bool checkHit(char, char);
     bool checkLocation(char, char);
     bool static checkSize(char, char, char, char, char);

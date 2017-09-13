@@ -16,7 +16,7 @@ class Game
     void gameEnd();
 
   private:
-    bool finished_;
+    bool isFinished_;
 };
 
 #endif // GAME_H

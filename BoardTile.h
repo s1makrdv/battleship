@@ -3,7 +3,8 @@
 
 #include "Tile.h"
 
-class BoardTile : public Tile {
+class BoardTile : public Tile
+{
 public:
     BoardTile();
     BoardTile(char c, char r);
@@ -15,8 +16,8 @@ public:
     void setShip();
 
 private:
-    bool hit_;
-    bool ship_;
+    bool isHit_;
+    bool isShip_;
 };
 
 

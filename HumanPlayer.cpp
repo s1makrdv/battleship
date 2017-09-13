@@ -20,11 +20,11 @@ HumanPlayer::HumanPlayer(istream& in, ostream& out) :
 
 bool HumanPlayer::readUserShotInput_(char* col, char* row)
 {
-  char tempChar;
+  char c;
   string str;
 
-  while(in_.get(tempChar) && isdigit(tempChar)) {
-    str.push_back(tempChar);
+  while(in_.get(c) && isdigit(c)) {
+    str.push_back(c);
   }
 
   *row = atoi(str.c_str());
@@ -33,8 +33,8 @@ bool HumanPlayer::readUserShotInput_(char* col, char* row)
     return false;
   }
 
-  if (isalpha(tempChar)) {
-    *col = toupper(tempChar);
+  if (isalpha(c)) {
+    *col = toupper(c);
   }
   else {
     return false;
@@ -49,7 +49,7 @@ bool HumanPlayer::readUserShotInput_(char* col, char* row)
 
 void HumanPlayer::move(char* col, char* row, Board& board)
 {
-  bool success = false;
+  bool isSuccess = false;
   do {
     out_ << "Enter your shot (ex. 1A):";
 
@@ -59,7 +59,7 @@ void HumanPlayer::move(char* col, char* row, Board& board)
     continue;
   }
 
-  success = board.makeAttempt(*col, *row);
+  isSuccess = board.makeAttempt(*col, *row);
 
-  } while (!success);
+  } while (!isSuccess);
 }

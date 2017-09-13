@@ -13,7 +13,7 @@ class ShipTile : public Tile
     void setHit();
 
   private:
-    bool h_;
+    bool isHit_;
 };
 
 

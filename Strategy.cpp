@@ -78,8 +78,8 @@ bool Strategy::getMove(char* col, char* row)
     }
   }
 
-  bool success = false;
-  while(!success) {
+  bool isSuccess = false;
+  while(!isSuccess) {
     if (MAYBE == up_) {
       if (UP != last_dir_) {
         last_dir_ = UP;
@@ -91,7 +91,7 @@ bool Strategy::getMove(char* col, char* row)
       }
       else {
         --lastTry_.row;
-        success = true;
+        isSuccess = true;
       }
     }
     else if (MAYBE == down_) {
@@ -104,7 +104,7 @@ bool Strategy::getMove(char* col, char* row)
         down_ = NOCHANCE;
       } else {
         ++lastTry_.row;
-        success = true;
+        isSuccess = true;
       }
     }
     else if (MAYBE == left_) {
@@ -118,7 +118,7 @@ bool Strategy::getMove(char* col, char* row)
       }
       else {
         --lastTry_.col;
-        success = true;
+        isSuccess = true;
       }
     }
     else if (MAYBE == right_) {
@@ -132,7 +132,7 @@ bool Strategy::getMove(char* col, char* row)
       }
       else {
         ++lastTry_.col;
-        success = true;
+        isSuccess = true;
       }
     }
     else {

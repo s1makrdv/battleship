@@ -1,14 +1,18 @@
 #include "Game.h"
 
 
-Game::Game() : finished_(false) { }
+Game::Game() :
+  isFinished_(false)
+{
+
+}
 
 bool Game::isGameOver() const
 {
-  return finished_;
+  return isFinished_;
 }
 
 void Game::gameEnd()
 {
-  finished_ = true;
+  isFinished_ = true;
 }

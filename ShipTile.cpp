@@ -2,24 +2,24 @@
 
 
 ShipTile::ShipTile() :
-  h_(false)
+  isHit_(false)
 {
 
 }
 
 ShipTile::ShipTile(char col, char row) :
   Tile(col, row),
-  h_(false)
+  isHit_(false)
 {
 
 }
 
 bool ShipTile::getHit() const
 {
-  return h_;
+  return isHit_;
 }
 
 void ShipTile::setHit()
 {
-  h_ = true;
+  isHit_ = true;
 }
