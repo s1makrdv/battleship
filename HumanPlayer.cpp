@@ -42,7 +42,7 @@ bool HumanPlayer::readUserShotInput_(char* col, char* row)
     return false;
   }
 
-  if (*col < 'A' || *col > 'J') {
+  if (*col < firstColChar || *col > lastColChar) {
     return false;
   }
 

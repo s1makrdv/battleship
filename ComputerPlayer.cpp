@@ -8,7 +8,7 @@ using namespace std;
 ComputerPlayer::ComputerPlayer(std::string name) : Player(name)
 {
   for (int r = 1; r < 1 + boardSize; ++r) {
-    for (int c = 'A'; c < 'A' + boardSize; ++c) {
+    for (int c = firstColChar; c < firstColChar + boardSize; ++c) {
       coords_.push_back(coord_t(c, r));
     }
   }

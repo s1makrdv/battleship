@@ -117,7 +117,7 @@ void Strategy::checkLeftDirSuccess_()
     lastTry_ = firstTry_;
   }
 
-  if ('A' == lastTry_.col) {
+  if (firstColChar == lastTry_.col) {
     left_ = NOCHANCE;
   }
   else {
@@ -133,7 +133,7 @@ void Strategy::checkRightDirSuccess_()
     lastTry_ = firstTry_;
   }
 
-  if ('J' == lastTry_.col) {
+  if (lastColChar == lastTry_.col) {
     right_ = NOCHANCE;
   }
   else {

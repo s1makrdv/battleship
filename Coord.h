@@ -1,6 +1,9 @@
 #ifndef COORD_H
 #define COORD_H
 
+const char firstColChar = 'A';
+const char lastColChar = 'J';
+
 typedef struct coord
 {
   coord() : col(0), row(0) { }

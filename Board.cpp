@@ -35,12 +35,12 @@ Board::Board(istream& in, ostream& out) :
                         out_(out)
 {
   for (int row = 1; row < 1 + boardSize; ++row) {
-    for(int col = 'A'; col < 'A' + boardSize; ++col) {
+    for(int col = firstColChar; col < firstColChar + boardSize; ++col) {
       shipGrid_.push_back(BoardTile(col, row));
     }
   }
   for (int row = 1; row < 1 + boardSize; ++row) {
-    for(int col = 'A'; col < 'A' + boardSize; ++col) {
+    for(int col = firstColChar; col < firstColChar + boardSize; ++col) {
       attackGrid_.push_back(BoardTile(col, row));
     }
   }
@@ -82,11 +82,11 @@ void Board::writeShipGrid(ConsoleDisplay& display)
 
   int i = 0;
   for (b_it = shipGrid_.begin(); b_it != shipGrid_.end(); ++b_it) {
-    if ((*b_it).getCol() == 'A') {
+    if ((*b_it).getCol() == firstColChar) {
       display.write(0, row, rowStart[i++]);
       display.write(0, row, displayTile(*b_it));
     }
-    else if ((*b_it).getCol() == 'J') {
+    else if ((*b_it).getCol() == lastColChar) {
       display.write(0, row, displayTile(*b_it));
       ++row;
     }
@@ -107,11 +107,11 @@ void Board::writeAttackGrid(ConsoleDisplay& display)
 
   int i = 0;
   for (a_it = attackGrid_.begin(); a_it != attackGrid_.end(); ++a_it) {
-    if ((*a_it).getCol() == 'A') {
+    if ((*a_it).getCol() == firstColChar) {
       display.write(1, row, rowStart[i++]);
       display.write(1, row, displayTile(*a_it));
     }
-    else if ((*a_it).getCol() == 'J') {
+    else if ((*a_it).getCol() == lastColChar) {
       display.write(1, row, displayTile(*a_it));
       ++row;
     }
@@ -171,7 +171,7 @@ bool readUserShipInput(istream& in
 bool isOffBoard(char col1, char row1, char col2, char row2)
 {
   if(row1 < 1 || row1 > boardSize || row2 < 1 || row2 > boardSize ||
-     col1 < 'A' || col1 > 'J' || col2 < 'A' || col2 > 'J'){
+     col1 < firstColChar || col1 > lastColChar || col2 < firstColChar || col2 > lastColChar){
     return true;
   }
   else {
@@ -197,7 +197,7 @@ vector<ShipTile>::iterator ship_it;
 
   for (ship_it = ship.shipBegin(); ship_it != ship.shipEnd(); ++ship_it) {
     int i = ((*ship_it).getRow() - 1) * boardSize;
-    i = i + (*ship_it).getCol() - 'A';
+    i = i + (*ship_it).getCol() - firstColChar;
     shipGrid_[i].setShip();
   }
 }
@@ -276,7 +276,7 @@ void Board::shipPlacementRandom_(const Ship::shipInfo& info)
 
   if (!isInitialized) {
     for (int row = 1; row < 1 + boardSize; ++row) {
-      for (int col = 'A'; col < 'A' + boardSize; ++col) {
+      for (int col = firstColChar; col < firstColChar + boardSize; ++col) {
         coords.push_back(coord_t(col, row));
       }
     }
@@ -309,7 +309,7 @@ void Board::placeShips()
 
 bool Board::makeAttempt(char col, char row)
 {
-  int i = ((row - 1) * boardSize) + col - 'A';
+  int i = ((row - 1) * boardSize) + col - firstColChar;
 
   if (attackGrid_[i].getHit()) {
     return false;
@@ -329,7 +329,7 @@ bool Board::checkShot(char col, char row, string& str)
   for (ship_it = ships_.begin(); ship_it != ships_.end(); ++ship_it) {
     if ((*ship_it).checkHit(col, row)) {
       str = (*ship_it).type(); // Return ship type string
-      int i = ((row - 1) * boardSize) + col - 'A';
+      int i = ((row - 1) * boardSize) + col - firstColChar;
       shipGrid_[i].setHit();
       return true;
     }
@@ -339,7 +339,7 @@ bool Board::checkShot(char col, char row, string& str)
 
 void Board::markHit(char col, char row)
 {
-  int i = ((row - 1) * boardSize) + col - 'A';
+  int i = ((row - 1) * boardSize) + col - firstColChar;
   attackGrid_[i].setShip(); // Marks a ship in this tile
 }
 
