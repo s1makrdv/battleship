@@ -16,12 +16,18 @@ class Strategy
     bool getMove(char* col, char* row);
 
   private:
+    void lastDirInit_();
+    void checkUpDirSuccess_();
+    void checkDownDirSuccess_();
+    void checkLeftDirSuccess_();
+    void checkRightDirSuccess_();
+
     void reset_();
     void set_(char c, char r);
 
     chance_t up_, down_, left_, right_;
     dir_t    last_dir_;
-    bool     isSuccessful_;
+    bool     isSuccess_, isCurrentDirSuccess;
     coord_t  firstTry_;
     coord_t  lastTry_;
 };

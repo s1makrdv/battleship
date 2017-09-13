@@ -16,7 +16,7 @@ void Strategy::update(char col, char row)
     set_(col, row);
   }
   else {
-    isSuccessful_ = true;
+    isSuccess_ = true;
     if (UP == last_dir_ || DOWN == last_dir_) {
       left_ = NOTLIKELY;
       right_ = NOTLIKELY;
@@ -49,7 +49,7 @@ void Strategy::reset_()
   down_ = MAYBE;
   left_ = MAYBE;
   right_ = MAYBE;
-  isSuccessful_ = true;
+  isSuccess_ = true;
   last_dir_ = NONE;
 }
 
@@ -61,9 +61,9 @@ void Strategy::set_(char col, char row)
   lastTry_.row = row;
 }
 
-bool Strategy::getMove(char* col, char* row)
+void Strategy::lastDirInit_()
 {
-  if (!isSuccessful_) {
+  if (!isSuccess_) {
     if (UP == last_dir_) {
       up_ = NOTLIKELY;
     }
@@ -77,63 +77,88 @@ bool Strategy::getMove(char* col, char* row)
       right_ = NOTLIKELY;
     }
   }
+}
 
-  bool isSuccess = false;
-  while(!isSuccess) {
+void Strategy::checkUpDirSuccess_()
+{
+  if (UP != last_dir_) {
+    last_dir_ = UP;
+    lastTry_ = firstTry_;
+  }
+
+  if (1 == lastTry_.row) {
+    up_ = NOCHANCE;
+  }
+  else {
+    --lastTry_.row;
+    isCurrentDirSuccess = true;
+  }
+}
+
+void Strategy::checkDownDirSuccess_()
+{
+  if (DOWN != last_dir_) {
+    last_dir_ = DOWN;
+    lastTry_ = firstTry_;
+  }
+
+  if (10 == lastTry_.row) {
+    down_ = NOCHANCE;
+  } else {
+    ++lastTry_.row;
+    isCurrentDirSuccess = true;
+  }
+}
+
+void Strategy::checkLeftDirSuccess_()
+{
+  if (LEFT != last_dir_) {
+    last_dir_ = LEFT;
+    lastTry_ = firstTry_;
+  }
+
+  if ('A' == lastTry_.col) {
+    left_ = NOCHANCE;
+  }
+  else {
+    --lastTry_.col;
+    isCurrentDirSuccess = true;
+  }
+}
+
+void Strategy::checkRightDirSuccess_()
+{
+  if (RIGHT != last_dir_) {
+    last_dir_ = RIGHT;
+    lastTry_ = firstTry_;
+  }
+
+  if ('J' == lastTry_.col) {
+    right_ = NOCHANCE;
+  }
+  else {
+    ++lastTry_.col;
+    isCurrentDirSuccess = true;
+  }
+}
+
+bool Strategy::getMove(char* col, char* row)
+{
+  lastDirInit_();
+
+  isCurrentDirSuccess = false;
+  while(!isCurrentDirSuccess) {
     if (MAYBE == up_) {
-      if (UP != last_dir_) {
-        last_dir_ = UP;
-        lastTry_ = firstTry_;
-      }
-
-      if (1 == lastTry_.row) {
-        up_ = NOCHANCE;
-      }
-      else {
-        --lastTry_.row;
-        isSuccess = true;
-      }
+      checkUpDirSuccess_();
     }
     else if (MAYBE == down_) {
-      if (DOWN != last_dir_) {
-        last_dir_ = DOWN;
-        lastTry_ = firstTry_;
-      }
-
-      if (10 == lastTry_.row) {
-        down_ = NOCHANCE;
-      } else {
-        ++lastTry_.row;
-        isSuccess = true;
-      }
+      checkDownDirSuccess_();
     }
     else if (MAYBE == left_) {
-      if (LEFT != last_dir_) {
-        last_dir_ = LEFT;
-        lastTry_ = firstTry_;
-      }
-
-      if ('A' == lastTry_.col) {
-        left_ = NOCHANCE;
-      }
-      else {
-        --lastTry_.col;
-        isSuccess = true;
-      }
+      checkLeftDirSuccess_();
     }
     else if (MAYBE == right_) {
-      if (RIGHT != last_dir_) {
-        last_dir_ = RIGHT;
-        lastTry_ = firstTry_;
-      }
-
-      if ('J' == lastTry_.col) {
-        right_ = NOCHANCE;
-      }
-      else {
-        ++lastTry_.col;
-        isSuccess = true;
-      }
+      checkRightDirSuccess_();
     }
     else {
       reset_();
@@ -143,7 +168,7 @@ bool Strategy::getMove(char* col, char* row)
 
   *col = lastTry_.col;
   *row = lastTry_.row;
-  isSuccessful_ = false;
+  isSuccess_ = false;
 
   return true;
 }

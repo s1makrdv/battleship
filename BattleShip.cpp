@@ -8,6 +8,8 @@ using namespace std;
 BattleShip::BattleShip(istream& input, ostream& output) :
                 in_(input),
                 out_(output),
+                column_(0),
+                row_(0),
                 display_(screenPanels, sizeof(screenPanels), screenHeight),
                 firstPlayerBoard_(in_, out_),
                 secondPlayerBoard_(in_, out_),

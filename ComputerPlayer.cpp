@@ -16,16 +16,16 @@ ComputerPlayer::ComputerPlayer(std::string name) : Player(name)
   srand(time(0));
 }
 
-void ComputerPlayer::move(char *c, char *r, Board& board)
+void ComputerPlayer::move(char *col, char *row, Board& board)
 {
   list<coord_t>::iterator c_it;
 
   bool isSuccess = false;
 
-  while (!isSuccess && strategy_.isValid()) { // Use apriori knowlege
-    strategy_.getMove(c, r);
+  while (!isSuccess && strategy_.isValid()) {
+    strategy_.getMove(col, row);
     for (c_it = coords_.begin(); c_it != coords_.end(); ++c_it) {
-      if (*c == (*c_it).col && *r == (*c_it).row) {
+      if (*col == (*c_it).col && *row == (*c_it).row) {
         isSuccess = true;
         coords_.erase(c_it);
         break;
@@ -41,13 +41,13 @@ void ComputerPlayer::move(char *c, char *r, Board& board)
       c_it++;
     }
 
-    *c = (*c_it).col;
-    *r = (*c_it).row;
+    *col = (*c_it).col;
+    *row = (*c_it).row;
     coords_.erase(c_it);
   }
 }
 
-void ComputerPlayer::update(char c, char r)
+void ComputerPlayer::update(char col, char row)
 {
-  strategy_.update(c, r);
+  strategy_.update(col, row);
 }

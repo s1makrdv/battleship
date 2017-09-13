@@ -14,7 +14,7 @@ class ComputerPlayer : public Player
     ComputerPlayer(std::string name = "Computer");
 
     void move(char *c, char *r, Board& board);
-    void update(char c, char r);
+    void update(char c, char row);
 
   private:
     std::list<coord_t> coords_;
