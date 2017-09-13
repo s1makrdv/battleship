@@ -37,15 +37,10 @@ class BattleShip : public Game
     HumanPlayer    firstPlayer_;
     ComputerPlayer secondPlayer_;
 
-    uint8_t firstPlayerStepNo_;
-    uint8_t secondPlayerStepNo_;
-
-    bool isFirstPlayerSuccess_;
-    bool isSecondPlayerSuccess_;
-
     char column_, row_;
 
     std::string shipName_;
+
 };
 
 #endif // BATTLESHIP_H

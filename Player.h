@@ -20,8 +20,17 @@ class Player
 
     void setName(const std::string& name);
 
+    bool isSuccess() const;
+    void setIsSuccess(bool isSuccess);
+
+    int stepNo() const;
+    void setStepNo(int stepNo);
+    void setStepNo();
+
   private:
     std::string name_;
+    bool isSuccess_;
+    int stepNo_;
 };
 
 

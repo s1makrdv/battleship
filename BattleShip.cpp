@@ -14,14 +14,17 @@ BattleShip::BattleShip(istream& input, ostream& output) :
                 firstPlayerBoard_(in_, out_),
                 secondPlayerBoard_(in_, out_),
                 firstPlayer_(in_, out_),
-                secondPlayer_(),
-                firstPlayerStepNo_(0),
-                secondPlayerStepNo_(0),
-                isFirstPlayerSuccess_(true),
-                isSecondPlayerSuccess_(false)
+                secondPlayer_()
 {
   firstPlayerBoard_.placeShips();
   secondPlayerBoard_.placeShips();
+
+  firstPlayer_.setIsSuccess(true);
+  secondPlayer_.setIsSuccess(false);
+
+  firstPlayer_.setStepNo(0);
+  secondPlayer_.setStepNo(0);
+
   display_.clear();
 }
 
@@ -33,23 +36,23 @@ void BattleShip::gameUpdate()
 
   display_.clear();
 
-  if(isFirstPlayerSuccess_ && !isSecondPlayerSuccess_){
+  if(firstPlayer_.isSuccess() && !secondPlayer_.isSuccess() ){
     firstPlayer_.move(&column_, &row_, firstPlayerBoard_);
-    firstPlayerStepNo_++;
+    firstPlayer_.setStepNo();
     if (secondPlayerBoard_.checkShot(column_, row_, shipName_)) {
       display_.write(2, firstPlayer_.name() + " hit " + secondPlayer_.name() + "'s" + " " + shipName_);
       firstPlayerBoard_.markHit(column_, row_);
     }
     else{
       display_.write(2, firstPlayer_.name() + " missed!!!");
-      isFirstPlayerSuccess_ = false;
-      isSecondPlayerSuccess_ = true;
+      firstPlayer_.setIsSuccess(false);
+      secondPlayer_.setIsSuccess(true);
     }
   }
 
-  if(!isFirstPlayerSuccess_ && isSecondPlayerSuccess_){
+  if( !firstPlayer_.isSuccess() && secondPlayer_.isSuccess() ){
     secondPlayer_.move(&column_, &row_, secondPlayerBoard_);
-    secondPlayerStepNo_++;
+    secondPlayer_.setStepNo();
     if (firstPlayerBoard_.checkShot(column_, row_, shipName_)) {
       display_.write(2, secondPlayer_.name() + " hit " + firstPlayer_.name() + "'s" + " " + shipName_);
       secondPlayerBoard_.markHit(column_, row_);
@@ -57,13 +60,13 @@ void BattleShip::gameUpdate()
     }
     else{
       display_.write(2, "Computer missed!!!");
-      isFirstPlayerSuccess_ = true;
-      isSecondPlayerSuccess_ = false;
+      firstPlayer_.setIsSuccess(true);
+      secondPlayer_.setIsSuccess(false);
     }
   }
 
-  display_.write(firstPlayer_.name() + " make: " + to_string(firstPlayerStepNo_) + " shoot's");
-  display_.write(secondPlayer_.name() + " make: " + to_string(secondPlayerStepNo_) + " shoot's\n ");
+  display_.write(firstPlayer_.name() + " make: " + to_string(firstPlayer_.stepNo()) + " shoot's");
+  display_.write(secondPlayer_.name() + " make: " + to_string(secondPlayer_.stepNo()) + " shoot's\n ");
 
   if (secondPlayerBoard_.isSunkFleet()) {
     secondPlayerBoard_.writeShipGrid(display_);
