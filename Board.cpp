@@ -2,8 +2,7 @@
 #include <cctype>
 #include <cstdlib>
 #include <ctime>
-#include <list>
-#include "coord.h"
+
 #include "Board.h"
 #include "ShipTile.h"
 
@@ -12,7 +11,7 @@ using namespace std;
 string const shipGridTop =     "        Ship Grid      ";
 string const attackGridTop = "       Attack Grid     ";
 string const boardTop =     "  |A|B|C|D|E|F|G|H|I|J|";
-string const rowStart[Board::boardSize] = {
+string const rowStart[boardSize] = {
 				" 1|",
 				" 2|",
 				" 3|",
@@ -171,7 +170,7 @@ bool readUserShipInput(istream& in
 
 bool isOffBoard(char col1, char row1, char col2, char row2)
 {
-  if(row1 < 1 || row1 > 10 || row2 < 1 || row2 > 10 ||
+  if(row1 < 1 || row1 > boardSize || row2 < 1 || row2 > boardSize ||
      col1 < 'A' || col1 > 'J' || col2 < 'A' || col2 > 'J'){
     return true;
   }
@@ -194,13 +193,79 @@ bool Board::isShipCollision_(Ship& ship)
 
 void Board::markBoard_(Ship& ship)
 {
-vector<ShipTile>::iterator s_it;
+vector<ShipTile>::iterator ship_it;
 
-  for (s_it = ship.shipBegin(); s_it != ship.shipEnd(); ++s_it) {
-    int i = ((*s_it).getRow() - 1) * boardSize;
-    i = i + (*s_it).getCol() - 'A';
+  for (ship_it = ship.shipBegin(); ship_it != ship.shipEnd(); ++ship_it) {
+    int i = ((*ship_it).getRow() - 1) * boardSize;
+    i = i + (*ship_it).getCol() - 'A';
     shipGrid_[i].setShip();
   }
+}
+
+bool Board::isPlacedShipsRandom_(std::list<coord_t>::iterator c_it,
+                             const Ship::shipInfo& info,
+                             std::list<coord_t> coords)
+{
+  char col1 = (*c_it).col;
+  char row1 = (*c_it).row;
+
+  char dirSeed = rand() % 4;
+  int i = 0;
+
+  bool isSuccess = false;
+
+  do {
+    char col2, row2;
+    char direction = (dirSeed + i) % 4;
+
+    switch (direction) {
+      case 0:
+        col2 = col1;
+        row2 = (row1 - info.size) + 1;
+        break;
+
+      case 1:
+        col2 = col1;
+        row2 = (row1 + info.size) - 1;
+        break;
+
+      case 2:
+        col2 = (col1 - info.size) + 1;
+        row2 = row1;
+        break;
+
+      case 3:
+        col2 = (col1 + info.size) - 1;
+        row2 = row1;
+        break;
+
+      default:
+        while(1);
+    }
+
+    if (isOffBoard(col1, row1, col2, row2)) {
+      continue;
+    }
+
+    if (!Ship::checkSize(info.size, col1, row1, col2, row2)) {
+      continue;
+    }
+
+    Ship ship(info, col1, row1, col2, row2);
+
+    if (isShipCollision_(ship)) {
+      continue;
+    }
+    else {
+      ships_.push_back(ship);
+      markBoard_(ship);
+      coords.erase(c_it); // Delete coordinate
+      isSuccess = true;
+    }
+
+  } while (!isSuccess && ++i < 4);
+
+  return isSuccess;
 }
 
 void Board::shipPlacementRandom_(const Ship::shipInfo& info)
@@ -210,9 +275,9 @@ void Board::shipPlacementRandom_(const Ship::shipInfo& info)
   std::list<coord_t>::iterator c_it;
 
   if (!isInitialized) {
-    for (int r = 1; r < 1 + Board::boardSize; ++r) {
-      for (int c = 'A'; c < 'A' + Board::boardSize; ++c) {
-        coords.push_back(coord_t(c, r));
+    for (int row = 1; row < 1 + boardSize; ++row) {
+      for (int col = 'A'; col < 'A' + boardSize; ++col) {
+        coords.push_back(coord_t(col, row));
       }
     }
 
@@ -223,7 +288,6 @@ void Board::shipPlacementRandom_(const Ship::shipInfo& info)
 
   bool isSuccess = false;
   while (!isSuccess) {
-    // Select random coordinate
     int count = (rand() % coords.size());
     c_it = coords.begin();
 
@@ -231,76 +295,21 @@ void Board::shipPlacementRandom_(const Ship::shipInfo& info)
       c_it++;
     }
 
-    char c1 = (*c_it).col;
-    char r1 = (*c_it).row;
-
-    char dirSeed = rand() % 4;
-    int i = 0;
-
-    do {
-      char c2, r2;
-      char direction = (dirSeed + i) % 4;
-
-      switch (direction) {
-        case 0:
-          c2 = c1;
-          r2 = (r1 - info.size) + 1;
-          break;
-
-        case 1:
-          c2 = c1;
-          r2 = (r1 + info.size) - 1;
-          break;
-
-        case 2:
-          c2 = (c1 - info.size) + 1;
-          r2 = r1;
-          break;
-
-        case 3:
-          c2 = (c1 + info.size) - 1;
-          r2 = r1;
-          break;
-
-        default:
-          while(1);
-      }
-
-      if (isOffBoard(c1, r1, c2, r2)) {
-        continue;
-      }
-
-      if (!Ship::checkSize(info.size, c1, r1, c2, r2)) {
-        continue;
-      }
-
-      Ship s(info, c1, r1, c2, r2);
-
-      if (isShipCollision_(s)) {
-        continue;
-      }
-      else {
-        ships_.push_back(s);
-        markBoard_(s);
-        coords.erase(c_it); // Delete coordinate
-        isSuccess = true;
-      }
-
-    } while (!isSuccess && ++i < 4);
+    isSuccess = isPlacedShipsRandom_(c_it, info, coords);
   }
 }
 
 void Board::placeShips()
 {
-  vector<Ship::shipInfo>::const_iterator s_it;
+  vector<Ship::shipInfo>::const_iterator ship_it;
 
-  for (s_it = shipTypes.begin(); s_it != shipTypes.end(); ++s_it)
-    shipPlacementRandom_(*s_it);
+  for (ship_it = shipTypes.begin(); ship_it != shipTypes.end(); ++ship_it)
+    shipPlacementRandom_(*ship_it);
 }
 
-bool Board::makeAttempt(char c, char r)
+bool Board::makeAttempt(char col, char row)
 {
-  int i = ((r - 1) * boardSize) + c - 'A';
+  int i = ((row - 1) * boardSize) + col - 'A';
 
   if (attackGrid_[i].getHit()) {
     return false;
@@ -311,16 +320,16 @@ bool Board::makeAttempt(char c, char r)
   }
 }
 
-bool Board::checkShot(char c, char r, string& str)
+bool Board::checkShot(char col, char row, string& str)
 {
-  vector<Ship>::iterator s_it;
+  vector<Ship>::iterator ship_it;
 
   str.clear(); // clear return string
 
-  for (s_it = ships_.begin(); s_it != ships_.end(); ++s_it) {
-    if ((*s_it).checkHit(c, r)) {
-      str = (*s_it).type(); // Return ship type string
-      int i = ((r - 1) * boardSize) + c - 'A';
+  for (ship_it = ships_.begin(); ship_it != ships_.end(); ++ship_it) {
+    if ((*ship_it).checkHit(col, row)) {
+      str = (*ship_it).type(); // Return ship type string
+      int i = ((row - 1) * boardSize) + col - 'A';
       shipGrid_[i].setHit();
       return true;
     }
@@ -328,17 +337,17 @@ bool Board::checkShot(char c, char r, string& str)
   return false;
 }
 
-void Board::markHit(char c, char r)
+void Board::markHit(char col, char row)
 {
-  int i = ((r - 1) * boardSize) + c - 'A';
+  int i = ((row - 1) * boardSize) + col - 'A';
   attackGrid_[i].setShip(); // Marks a ship in this tile
 }
 
 bool Board::isSunkFleet()
 {
-  vector<Ship>::iterator s_it;
-  for (s_it = ships_.begin(); s_it != ships_.end(); ++s_it) {
-    if (!(*s_it).isSunk()) {
+  vector<Ship>::iterator ship_it;
+  for (ship_it = ships_.begin(); ship_it != ships_.end(); ++ship_it) {
+    if (!(*ship_it).isSunk()) {
       return false;
     }
   }

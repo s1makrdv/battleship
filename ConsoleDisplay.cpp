@@ -16,15 +16,15 @@ ConsoleDisplay::ConsoleDisplay(const char widths[],
   for (int i = 0; i < p_; ++i)
     screen_.push_back(vector<string>());
 
-  for (screenIt_t s_it = screen_.begin(); s_it != screen_.end(); ++s_it)
+  for (screenIt_t ship_it = screen_.begin(); ship_it != screen_.end(); ++ship_it)
     for (int i = 0; i < h_; ++i)
-      (*s_it).push_back(string());
+      (*ship_it).push_back(string());
 }
 
 void ConsoleDisplay::clear()
 {
-  for (screenIt_t s_it = screen_.begin(); s_it != screen_.end(); ++s_it)
-    for (panelIt_t p_it = (*s_it).begin(); p_it != (*s_it).end(); ++p_it)
+  for (screenIt_t ship_it = screen_.begin(); ship_it != screen_.end(); ++ship_it)
+    for (panelIt_t p_it = (*ship_it).begin(); p_it != (*ship_it).end(); ++p_it)
       (*p_it).clear(); // Clear string
 
   lastRow_ = 0;
@@ -39,8 +39,8 @@ void ConsoleDisplay::refresh()
 
   char panel = 0;
 
-  for (screenIt_t s_it = screen_.begin(); s_it != screen_.end(); ++s_it) {
-    panelIt_t p_it = (*s_it).begin();
+  for (screenIt_t ship_it = screen_.begin(); ship_it != screen_.end(); ++ship_it) {
+    panelIt_t p_it = (*ship_it).begin();
     for (panelIt_t scrOut_it = screenOut.begin(); scrOut_it != screenOut.end(); ++scrOut_it) {
       try {
         // Append panel string plus padding

@@ -5,15 +5,17 @@
 #include <queue>
 #include <string>
 #include <iostream>
+#include <list>
+#include "coord.h"
 #include "BoardTile.h"
 #include "Ship.h"
 #include "ConsoleDisplay.h"
 
+static int const boardSize = 10;
+
 class Board
 {
   public:
-    static int const boardSize = 10;
-
     const std::vector<Ship::shipInfo> shipTypes = {{ "Four-deck", 4},
                                                    { "Three-deck", 3},
                                                    { "Three-deck", 3},
@@ -28,9 +30,9 @@ class Board
     Board(std::istream& in, std::ostream& out);
 
     void placeShips();
-    bool makeAttempt(char c, char r);
-    bool checkShot(char c, char r, std::string& str);
-    void markHit(char c, char r);
+    bool makeAttempt(char col, char row);
+    bool checkShot(char col, char row, std::string& str);
+    void markHit(char col, char row);
     bool isSunkFleet();
     void writeShipGrid(ConsoleDisplay& display);
     void writeAttackGrid(ConsoleDisplay& display);
@@ -38,6 +40,9 @@ class Board
   private:
     bool isShipCollision_(Ship&);
     void shipPlacementPrompt_(const Ship::shipInfo&, ConsoleDisplay& display);
+    bool isPlacedShipsRandom_(std::list<coord_t>::iterator c_it,
+                           const Ship::shipInfo& info,
+                           std::list<coord_t> coords);
     void shipPlacementRandom_(const Ship::shipInfo&);
     void markBoard_(Ship&);
     std::istream& in_;
@@ -45,6 +50,7 @@ class Board
     std::vector<Ship> ships_;
     std::vector<BoardTile> shipGrid_;
     std::vector<BoardTile> attackGrid_;
+
 };
 
 #endif //BOARD_H

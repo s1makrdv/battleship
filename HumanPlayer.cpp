@@ -5,6 +5,8 @@
 
 using namespace std;
 
+const size_t maxNameLength = 20;
+
 HumanPlayer::HumanPlayer(istream& in, ostream& out) :
   in_(in),
   out_(out)
@@ -13,7 +15,7 @@ HumanPlayer::HumanPlayer(istream& in, ostream& out) :
   do {
     out_ << "Welcome To Battle Ship!!! What is your name (Max 20 chars)?: ";
     in_ >> str;
-  } while (str.length() > 20);
+  } while (str.length() > maxNameLength);
 
   setName(str);
 }
@@ -29,7 +31,7 @@ bool HumanPlayer::readUserShotInput_(char* col, char* row)
 
   *row = atoi(str.c_str());
 
-  if (*row > Board::boardSize || *row < 1) {
+  if (*row > boardSize || *row < 1) {
     return false;
   }
 
