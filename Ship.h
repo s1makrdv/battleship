@@ -16,7 +16,7 @@ class Ship
 
     typedef std::vector<ShipTile>::iterator ship_it;
 
-    Ship(const shipInfo&, char col1, char row, char col2, char row2);
+    Ship(const shipInfo&, char shipBeginColumn, char shipBeginRow, char shipEndColumn, char shipEndRow);
 
     std::string type() const;
 

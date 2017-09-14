@@ -3,29 +3,29 @@
 
 using namespace std;
 
-bool Ship::checkSize(char size, char col1, char row1, char col2, char row2)
+bool Ship::checkSize(char size, char shipBeginColumn, char shipBeginRow, char shipEndColumn, char shipEndRow)
 {
-  if (row1 == row2) {
-    if (col1 > col2) {
-      if ((col1 - col2) + 1 == size) {
+  if (shipBeginRow == shipEndRow) {
+    if (shipBeginColumn > shipEndColumn) {
+      if ((shipBeginColumn - shipEndColumn) + 1 == size) {
         return true;
       }
     }
     else {
-      if ((col2 - col1) + 1 == size) {
+      if ((shipEndColumn - shipBeginColumn) + 1 == size) {
         return true;
       }
     }
   }
 
-  if (col1 == col2) {
-    if (row1 > row2) {
-      if ((row1 - row2) + 1 == size) {
+  if (shipBeginColumn == shipEndColumn) {
+    if (shipBeginRow > shipEndRow) {
+      if ((shipBeginRow - shipEndRow) + 1 == size) {
         return true;
       }
     }
     else {
-      if ((row2 - row1) + 1 == size) {
+      if ((shipEndRow - shipBeginRow) + 1 == size) {
         return true;
       }
     }
@@ -55,40 +55,40 @@ Ship::ship_it Ship::shipEnd()
   return sections_.end();
 }
 
-void buildShipSections(std::vector<ShipTile>& tiles, char col1, char row1, char col2, char row2)
+void buildShipSections(std::vector<ShipTile>& tiles, char shipBeginColumn, char shipBeginRow, char shipEndColumn, char shipEndRow)
 {
   int i;
 
-  if (row1 == row2) {
-    if (col1 < col2) {
-      for (i = col1; i <= col2; ++i) {
-        tiles.push_back(ShipTile(i,row1));
+  if (shipBeginRow == shipEndRow) {
+    if (shipBeginColumn < shipEndColumn) {
+      for (i = shipBeginColumn; i <= shipEndColumn; ++i) {
+        tiles.push_back(ShipTile(i,shipBeginRow));
       }
     }
     else {
-      for (i = col2; i <= col1; ++i) {
-        tiles.push_back(ShipTile(i, row1));
+      for (i = shipEndColumn; i <= shipBeginColumn; ++i) {
+        tiles.push_back(ShipTile(i, shipBeginRow));
       }
     }
   }
   else {
-    if (row1 < row2) {
-      for (i = row1; i <= row2; ++i) {
-        tiles.push_back(ShipTile(col1, i));
+    if (shipBeginRow < shipEndRow) {
+      for (i = shipBeginRow; i <= shipEndRow; ++i) {
+        tiles.push_back(ShipTile(shipBeginColumn, i));
       }
     }
     else {
-      for (i = row2; i <= row1; ++i) {
-        tiles.push_back(ShipTile(col1, i));
+      for (i = shipEndRow; i <= shipBeginRow; ++i) {
+        tiles.push_back(ShipTile(shipBeginColumn, i));
       }
     }
   }
 }
 
-Ship::Ship(const shipInfo& i, char col1, char row, char col2, char row2)
+Ship::Ship(const shipInfo& i, char shipBeginColumn, char shipBeginRow, char shipEndColumn, char shipEndRow)
 {
   info_ = i;
-  buildShipSections(sections_, col1, row, col2, row2);
+  buildShipSections(sections_, shipBeginColumn, shipBeginRow, shipEndColumn, shipEndRow);
 }
 
 bool Ship::checkHit(char col, char row)

@@ -122,10 +122,10 @@ void Board::writeAttackGrid(ConsoleDisplay& display)
 }
 
 bool readUserShipInput(istream& in
-                       , char *col1
-                       , char *row1
-                       , char *col2
-                       , char *row2)
+                       , char *shipBeginColumn
+                       , char *shipBeginRow
+                       , char *shipEndColumn
+                       , char *shipEndRow)
 {
   char c;
   string str;
@@ -134,12 +134,12 @@ bool readUserShipInput(istream& in
     str.push_back(c);
   }
 
-  *row1 = atoi(str.c_str());
+  *shipBeginRow = atoi(str.c_str());
 
   str.clear();
 
   if (isalpha(c)) {
-    *col1 = toupper(c);
+    *shipBeginColumn = toupper(c);
   }
   else {
     return false;
@@ -154,12 +154,12 @@ bool readUserShipInput(istream& in
     str.push_back(c);
   }
 
-  *row2 = atoi(str.c_str());
+  *shipEndRow = atoi(str.c_str());
 
   str.clear();
 
   if (isalpha(c)) {
-    *col2 = toupper(c);
+    *shipEndColumn = toupper(c);
   }
   else {
     return false;
@@ -168,10 +168,10 @@ bool readUserShipInput(istream& in
   return true;
 }
 
-bool isOffBoard(char col1, char row1, char col2, char row2)
+bool isOffBoard(char shipBeginColumn, char shipBeginRow, char shipEndColumn, char shipEndRow)
 {
-  if(row1 < 1 || row1 > boardSize || row2 < 1 || row2 > boardSize ||
-     col1 < firstColChar || col1 > lastColChar || col2 < firstColChar || col2 > lastColChar){
+  if(shipBeginRow < 1 || shipBeginRow > boardSize || shipEndRow < 1 || shipEndRow > boardSize ||
+     shipBeginColumn < firstColChar || shipBeginColumn > lastColChar || shipEndColumn < firstColChar || shipEndColumn > lastColChar){
     return true;
   }
   else {
@@ -206,8 +206,8 @@ bool Board::isPlacedShipsRandom_(std::list<coord_t>::iterator c_it,
                              const Ship::shipInfo& info,
                              std::list<coord_t> coords)
 {
-  char col1 = (*c_it).col;
-  char row1 = (*c_it).row;
+  char shipBeginColumn = (*c_it).col;
+  char shipBeginRow = (*c_it).row;
 
   char dirSeed = rand() % 4;
   int i = 0;
@@ -215,43 +215,43 @@ bool Board::isPlacedShipsRandom_(std::list<coord_t>::iterator c_it,
   bool isSuccess = false;
 
   do {
-    char col2, row2;
+    char shipEndColumn, shipEndRow;
     char direction = (dirSeed + i) % 4;
 
     switch (direction) {
       case 0:
-        col2 = col1;
-        row2 = (row1 - info.size) + 1;
+        shipEndColumn = shipBeginColumn;
+        shipEndRow = (shipBeginRow - info.size) + 1;
         break;
 
       case 1:
-        col2 = col1;
-        row2 = (row1 + info.size) - 1;
+        shipEndColumn = shipBeginColumn;
+        shipEndRow = (shipBeginRow + info.size) - 1;
         break;
 
       case 2:
-        col2 = (col1 - info.size) + 1;
-        row2 = row1;
+        shipEndColumn = (shipBeginColumn - info.size) + 1;
+        shipEndRow = shipBeginRow;
         break;
 
       case 3:
-        col2 = (col1 + info.size) - 1;
-        row2 = row1;
+        shipEndColumn = (shipBeginColumn + info.size) - 1;
+        shipEndRow = shipBeginRow;
         break;
 
       default:
         while(1);
     }
 
-    if (isOffBoard(col1, row1, col2, row2)) {
+    if (isOffBoard(shipBeginColumn, shipBeginRow, shipEndColumn, shipEndRow)) {
       continue;
     }
 
-    if (!Ship::checkSize(info.size, col1, row1, col2, row2)) {
+    if (!Ship::checkSize(info.size, shipBeginColumn, shipBeginRow, shipEndColumn, shipEndRow)) {
       continue;
     }
 
-    Ship ship(info, col1, row1, col2, row2);
+    Ship ship(info, shipBeginColumn, shipBeginRow, shipEndColumn, shipEndRow);
 
     if (isShipCollision_(ship)) {
       continue;
