@@ -33,8 +33,7 @@ SOURCES += main.cpp \
     Strategy.cpp \
     ShipTile.cpp \
     BoardTile.cpp \
-    Game.cpp \
-    Player.cpp
+    Game.cpp
 
 
 DEFINES += QT_DEPRECATED_WARNINGS
