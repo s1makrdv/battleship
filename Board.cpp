@@ -168,10 +168,16 @@ bool readUserShipInput(istream& in
   return true;
 }
 
-bool isOffBoard(char shipBeginColumn, char shipBeginRow, char shipEndColumn, char shipEndRow)
+bool isOffBoard(char shipBeginColumn,
+                char shipBeginRow,
+                char shipEndColumn,
+                char shipEndRow)
 {
-  if(shipBeginRow < 1 || shipBeginRow > boardSize || shipEndRow < 1 || shipEndRow > boardSize ||
-     shipBeginColumn < firstColChar || shipBeginColumn > lastColChar || shipEndColumn < firstColChar || shipEndColumn > lastColChar){
+  if(shipBeginRow < 1 || shipBeginRow > boardSize || shipEndRow < 1 ||
+     shipEndRow > boardSize || shipBeginColumn < firstColChar ||
+     shipBeginColumn > lastColChar || shipEndColumn < firstColChar ||
+     shipEndColumn > lastColChar){
+
     return true;
   }
   else {
@@ -203,8 +209,8 @@ vector<ShipTile>::iterator ship_it;
 }
 
 bool Board::isPlacedShipsRandom_(std::list<coord_t>::iterator c_it,
-                             const Ship::shipInfo& info,
-                             std::list<coord_t> coords)
+                                 const Ship::shipInfo& info,
+                                 std::list<coord_t> coords)
 {
   char shipBeginColumn = (*c_it).col;
   char shipBeginRow = (*c_it).row;

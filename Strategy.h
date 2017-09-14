@@ -38,7 +38,7 @@ class Strategy
     void checkRightDirSuccess_();
 
     void reset_();
-    void set_(char c, char r);
+    void set_(char col, char row);
 
     Chance up_, down_, left_, right_;
     Direction    last_dir_;
