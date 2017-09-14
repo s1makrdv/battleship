@@ -247,7 +247,11 @@ bool Board::isPlacedShipsRandom_(std::list<coord_t>::iterator c_it,
       continue;
     }
 
-    if (!Ship::checkSize(info.size, shipBeginColumn, shipBeginRow, shipEndColumn, shipEndRow)) {
+    if (!Ship::checkSize(info.size,
+                         shipBeginColumn,
+                         shipBeginRow,
+                         shipEndColumn,
+                         shipEndRow)) {
       continue;
     }
 
