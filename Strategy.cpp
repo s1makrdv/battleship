@@ -1,11 +1,11 @@
 #include "Strategy.h"
 
 Strategy::Strategy() :
-  up_(MAYBE),
-  down_(MAYBE),
-  left_(MAYBE),
-  right_(MAYBE),
-  last_dir_(NONE)
+  up_(Chance::MAYBE),
+  down_(Chance::MAYBE),
+  left_(Chance::MAYBE),
+  right_(Chance::MAYBE),
+  last_dir_(Direction::NONE)
 {
 
 }
@@ -17,13 +17,13 @@ void Strategy::update(char col, char row)
   }
   else {
     isSuccess_ = true;
-    if (UP == last_dir_ || DOWN == last_dir_) {
-      left_ = NOTLIKELY;
-      right_ = NOTLIKELY;
+    if (Direction::UP == last_dir_ || Direction::DOWN == last_dir_) {
+      left_ = Chance::NOTLIKELY;
+      right_ = Chance::NOTLIKELY;
     }
     else {
-      up_ = NOTLIKELY;
-      down_ = NOTLIKELY;
+      up_ = Chance::NOTLIKELY;
+      down_ = Chance::NOTLIKELY;
     }
   }
 }
@@ -45,12 +45,12 @@ void Strategy::reset_()
   lastTry_.col = 0;
   lastTry_.row = 0;
 
-  up_ = MAYBE;
-  down_ = MAYBE;
-  left_ = MAYBE;
-  right_ = MAYBE;
+  up_ = Chance::MAYBE;
+  down_ = Chance::MAYBE;
+  left_ = Chance::MAYBE;
+  right_ = Chance::MAYBE;
   isSuccess_ = true;
-  last_dir_ = NONE;
+  last_dir_ = Direction::NONE;
 }
 
 void Strategy::set_(char col, char row)
@@ -64,30 +64,30 @@ void Strategy::set_(char col, char row)
 void Strategy::lastDirInit_()
 {
   if (!isSuccess_) {
-    if (UP == last_dir_) {
-      up_ = NOTLIKELY;
+    if (Direction::UP == last_dir_) {
+      up_ = Chance::NOTLIKELY;
     }
-    else if (DOWN == last_dir_) {
-      down_ = NOTLIKELY;
+    else if (Direction::DOWN == last_dir_) {
+      down_ = Chance::NOTLIKELY;
     }
-    else if (LEFT == last_dir_) {
-      left_ = NOTLIKELY;
+    else if (Direction::LEFT == last_dir_) {
+      left_ = Chance::NOTLIKELY;
     }
-    else if (RIGHT == last_dir_) {
-      right_ = NOTLIKELY;
+    else if (Direction::RIGHT == last_dir_) {
+      right_ = Chance::NOTLIKELY;
     }
   }
 }
 
 void Strategy::checkUpDirSuccess_()
 {
-  if (UP != last_dir_) {
-    last_dir_ = UP;
+  if (Direction::UP != last_dir_) {
+    last_dir_ = Direction::UP;
     lastTry_ = firstTry_;
   }
 
   if (1 == lastTry_.row) {
-    up_ = NOCHANCE;
+    up_ = Chance::NOCHANCE;
   }
   else {
     --lastTry_.row;
@@ -97,13 +97,13 @@ void Strategy::checkUpDirSuccess_()
 
 void Strategy::checkDownDirSuccess_()
 {
-  if (DOWN != last_dir_) {
-    last_dir_ = DOWN;
+  if (Direction::DOWN != last_dir_) {
+    last_dir_ = Direction::DOWN;
     lastTry_ = firstTry_;
   }
 
   if (10 == lastTry_.row) {
-    down_ = NOCHANCE;
+    down_ = Chance::NOCHANCE;
   } else {
     ++lastTry_.row;
     isCurrentDirSuccess = true;
@@ -112,13 +112,13 @@ void Strategy::checkDownDirSuccess_()
 
 void Strategy::checkLeftDirSuccess_()
 {
-  if (LEFT != last_dir_) {
-    last_dir_ = LEFT;
+  if (Direction::LEFT != last_dir_) {
+    last_dir_ = Direction::LEFT;
     lastTry_ = firstTry_;
   }
 
   if (firstColChar == lastTry_.col) {
-    left_ = NOCHANCE;
+    left_ = Chance::NOCHANCE;
   }
   else {
     --lastTry_.col;
@@ -128,13 +128,13 @@ void Strategy::checkLeftDirSuccess_()
 
 void Strategy::checkRightDirSuccess_()
 {
-  if (RIGHT != last_dir_) {
-    last_dir_ = RIGHT;
+  if (Direction::RIGHT != last_dir_) {
+    last_dir_ = Direction::RIGHT;
     lastTry_ = firstTry_;
   }
 
   if (lastColChar == lastTry_.col) {
-    right_ = NOCHANCE;
+    right_ = Chance::NOCHANCE;
   }
   else {
     ++lastTry_.col;
@@ -148,16 +148,16 @@ bool Strategy::getMove(char* col, char* row)
 
   isCurrentDirSuccess = false;
   while(!isCurrentDirSuccess) {
-    if (MAYBE == up_) {
+    if (Chance::MAYBE == up_) {
       checkUpDirSuccess_();
     }
-    else if (MAYBE == down_) {
+    else if (Chance::MAYBE == down_) {
       checkDownDirSuccess_();
     }
-    else if (MAYBE == left_) {
+    else if (Chance::MAYBE == left_) {
       checkLeftDirSuccess_();
     }
-    else if (MAYBE == right_) {
+    else if (Chance::MAYBE == right_) {
       checkRightDirSuccess_();
     }
     else {

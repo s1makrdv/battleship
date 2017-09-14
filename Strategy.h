@@ -3,8 +3,23 @@
 
 #include "coord.h"
 
-typedef enum {NOCHANCE, NOTLIKELY, MAYBE, LIKELY} chance_t;
-typedef enum {NONE, UP, DOWN, LEFT, RIGHT} dir_t;
+enum class Chance
+{
+  NONE,
+  NOCHANCE,
+  NOTLIKELY,
+  MAYBE,
+  LIKELY
+};
+
+enum class Direction
+{
+  NONE,
+  UP,
+  DOWN,
+  LEFT,
+  RIGHT
+} ;
 
 class Strategy
 {
@@ -25,8 +40,8 @@ class Strategy
     void reset_();
     void set_(char c, char r);
 
-    chance_t up_, down_, left_, right_;
-    dir_t    last_dir_;
+    Chance up_, down_, left_, right_;
+    Direction    last_dir_;
     bool     isSuccess_, isCurrentDirSuccess;
     coord_t  firstTry_;
     coord_t  lastTry_;
