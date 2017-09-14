@@ -31,7 +31,6 @@ SOURCES += main.cpp \
     ComputerPlayer.cpp \
     HumanPlayer.cpp \
     Strategy.cpp \
-    Tile.cpp \
     ShipTile.cpp \
     BoardTile.cpp \
     Game.cpp \
