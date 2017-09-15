@@ -14,16 +14,7 @@
 class Board
 {
   public:
-    const std::vector<Ship::shipInfo> shipTypes = {{ "Four-deck", 4},
-                                                   { "Three-deck", 3},
-                                                   { "Three-deck", 3},
-                                                   { "Double-deck", 2},
-                                                   { "Double-deck", 2},
-                                                   { "Double-deck", 2},
-                                                   { "Single-deck", 1},
-                                                   { "Single-deck", 1},
-                                                   { "Single-deck", 1},
-                                                   { "Single-deck", 1}};
+
 
     Board(std::istream& in, std::ostream& out);
 
@@ -38,9 +29,9 @@ class Board
   private:
     bool isShipCollision_(Ship&);
     void shipPlacementPrompt_(const Ship::shipInfo&, ConsoleDisplay& display);
-    bool isPlacedShipsRandom_(std::list<coord_t>::iterator c_it,
+    bool isPlacedShipsRandom_(std::list<Coord>::iterator c_it,
                            const Ship::shipInfo& info,
-                           std::list<coord_t> coords);
+                           std::list<Coord> coords);
     void shipPlacementRandom_(const Ship::shipInfo&);
     void markBoard_(Ship&);
     std::istream& in_;

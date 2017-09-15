@@ -186,9 +186,9 @@ vector<ShipTile>::iterator ship_it;
   }
 }
 
-bool Board::isPlacedShipsRandom_(std::list<coord_t>::iterator c_it,
+bool Board::isPlacedShipsRandom_(std::list<Coord>::iterator c_it,
                                  const Ship::shipInfo& info,
-                                 std::list<coord_t> coords)
+                                 std::list<Coord> coords)
 {
   char shipBeginColumn = (*c_it).col;
   char shipBeginRow = (*c_it).row;
@@ -258,14 +258,14 @@ bool Board::isPlacedShipsRandom_(std::list<coord_t>::iterator c_it,
 
 void Board::shipPlacementRandom_(const Ship::shipInfo& info)
 {
-  static std::list<coord_t> coords;
+  static std::list<Coord> coords;
   static bool isInitialized = false;
-  std::list<coord_t>::iterator c_it;
+  std::list<Coord>::iterator c_it;
 
   if (!isInitialized) {
     for (int row = 1; row < 1 + boardSize; ++row) {
       for (int col = firstColChar; col < firstColChar + boardSize; ++col) {
-        coords.push_back(coord_t(col, row));
+        coords.push_back(Coord(col, row));
       }
     }
 

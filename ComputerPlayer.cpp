@@ -9,7 +9,7 @@ ComputerPlayer::ComputerPlayer(std::string name) : Player(name)
 {
   for (int r = 1; r < 1 + boardSize; ++r) {
     for (int c = firstColChar; c < firstColChar + boardSize; ++c) {
-      coords_.push_back(coord_t(c, r));
+      coords_.push_back(Coord(c, r));
     }
   }
 
@@ -18,7 +18,7 @@ ComputerPlayer::ComputerPlayer(std::string name) : Player(name)
 
 void ComputerPlayer::move(char *col, char *row, Board& board)
 {
-  list<coord_t>::iterator c_it;
+  list<Coord>::iterator c_it;
 
   bool isSuccess = false;
 

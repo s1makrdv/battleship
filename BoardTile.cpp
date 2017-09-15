@@ -8,8 +8,8 @@ BoardTile::BoardTile() :
 
 }
 
-BoardTile::BoardTile(char c, char r) :
-  Tile(c, r),
+BoardTile::BoardTile(char col, char row) :
+  Tile(col, row),
   isHit_(false),
   isShip_(false)
 {

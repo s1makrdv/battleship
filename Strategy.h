@@ -43,8 +43,8 @@ class Strategy
     Chance up_, down_, left_, right_;
     Direction    last_dir_;
     bool     isSuccess_, isCurrentDirSuccess;
-    coord_t  firstTry_;
-    coord_t  lastTry_;
+    Coord  firstTry_;
+    Coord  lastTry_;
 };
 
 #endif // STRATEGY_H

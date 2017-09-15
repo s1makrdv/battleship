@@ -7,7 +7,7 @@ class BoardTile : public Tile
 {
 public:
     BoardTile();
-    BoardTile(char c, char r);
+    BoardTile(char col, char row);
 
     bool getHit() const;
     void setHit();

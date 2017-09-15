@@ -17,7 +17,7 @@ class ComputerPlayer : public Player
     void update(char c, char row) override;
 
   private:
-    std::list<coord_t> coords_;
+    std::list<Coord> coords_;
     Strategy strategy_;
 };
 

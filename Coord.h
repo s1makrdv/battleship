@@ -3,13 +3,13 @@
 
 #include "Helper.hpp"
 
-typedef struct coord
+struct Coord
 {
-  coord() : col(0), row(0) { }
-  coord(char c, char r) : col(c), row(r) { }
+  Coord() : col(0), row(0) { }
+  Coord(char c, char r) : col(c), row(r) { }
 
   char col;
   char row;
-} coord_t;
+};
 
 #endif // COORD_H
