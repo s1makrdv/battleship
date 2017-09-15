@@ -5,8 +5,6 @@
 
 using namespace std;
 
-const size_t maxNameLength = 20;
-
 HumanPlayer::HumanPlayer(istream& in, ostream& out) :
   in_(in),
   out_(out)

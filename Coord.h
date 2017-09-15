@@ -1,8 +1,7 @@
 #ifndef COORD_H
 #define COORD_H
 
-const char firstColChar = 'A';
-const char lastColChar = 'J';
+#include "Helper.hpp"
 
 typedef struct coord
 {

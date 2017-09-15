@@ -1,7 +1,7 @@
 #ifndef STRATEGY_H
 #define STRATEGY_H
 
-#include "coord.h"
+#include "Coord.h"
 
 enum class Chance
 {
@@ -19,7 +19,7 @@ enum class Direction
   DOWN,
   LEFT,
   RIGHT
-} ;
+};
 
 class Strategy
 {

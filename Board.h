@@ -6,12 +6,10 @@
 #include <string>
 #include <iostream>
 #include <list>
-#include "coord.h"
+#include "Coord.h"
 #include "BoardTile.h"
 #include "Ship.h"
 #include "ConsoleDisplay.h"
-
-static int const boardSize = 10;
 
 class Board
 {

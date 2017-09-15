@@ -8,28 +8,6 @@
 
 using namespace std;
 
-string const shipGridTop =     "        Ship Grid      ";
-string const attackGridTop = "       Attack Grid     ";
-string const boardTop =     "  |A|B|C|D|E|F|G|H|I|J|";
-string const rowStart[boardSize] = {
-				" 1|",
-				" 2|",
-				" 3|",
-				" 4|",
-				" 5|",
-				" 6|",
-				" 7|",
-				" 8|",
-				" 9|",
-				"10|" };
-
-string const shipNoHit = "O";
-string const shipHit = "@";
-string const boardNoHit = " ";
-string const boardHit = "X";
-
-string const legend =	"---Legend---   \nO Ship         \n@ Ship with hit\nX Missed Attack\n";
-
 Board::Board(istream& in, ostream& out) :
                         in_(in),
                         out_(out)

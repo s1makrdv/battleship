@@ -102,7 +102,7 @@ void Strategy::checkDownDirSuccess_()
     lastTry_ = firstTry_;
   }
 
-  if (10 == lastTry_.row) {
+  if (boardSize == lastTry_.row) {
     down_ = Chance::NOCHANCE;
   } else {
     ++lastTry_.row;
