@@ -2,6 +2,7 @@
 #define COORD_H
 
 #include "Helper.hpp"
+#include "define.h"
 
 struct Coord
 {

@@ -3,24 +3,6 @@
 
 #include "Coord.h"
 
-enum class Chance
-{
-  NONE,
-  NOCHANCE,
-  NOTLIKELY,
-  MAYBE,
-  LIKELY
-};
-
-enum class Direction
-{
-  NONE,
-  UP,
-  DOWN,
-  LEFT,
-  RIGHT
-};
-
 class Strategy
 {
   public:

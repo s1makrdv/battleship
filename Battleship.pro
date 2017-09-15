@@ -22,7 +22,8 @@ HEADERS += BattleShip.h \
     ShipTile.h \
     Strategy.h \
     Tile.h \
-    Helper.hpp
+    Helper.hpp \
+    define.h
 
 SOURCES += main.cpp \
     Ship.cpp \
