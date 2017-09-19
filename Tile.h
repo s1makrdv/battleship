@@ -4,8 +4,8 @@
 class Tile
 {
   public:
-    Tile() : col_(0), row_(0) { }
-    Tile(char col, char row) : col_(col), row_(row) { }
+    Tile();
+    Tile(char col, char row);
 
     char getCol() const;
     char getRow() const;

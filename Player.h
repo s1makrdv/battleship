@@ -9,8 +9,8 @@
 class Player
 {
   public:
-    Player() { }
-    Player(std::string name) : name_(name) { }
+    Player();
+    Player(std::string name);
 
     virtual void move(char* col, char* row, Board& board) = 0;
     virtual void update(char col, char row) = 0;
