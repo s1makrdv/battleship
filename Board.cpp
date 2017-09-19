@@ -151,11 +151,12 @@ bool isOffBoard(char shipBeginColumn,
                 char shipEndColumn,
                 char shipEndRow)
 {
-  if(shipBeginRow < 1 || shipBeginRow > boardSize || shipEndRow < 1 ||
-     shipEndRow > boardSize || shipBeginColumn < firstColChar ||
-     shipBeginColumn > lastColChar || shipEndColumn < firstColChar ||
-     shipEndColumn > lastColChar){
-
+  if(shipBeginRow < 1 || shipBeginRow > boardSize ||
+     shipEndRow   < 1 || shipEndRow   > boardSize){
+    return true;
+  }
+  else if(shipBeginColumn < firstColChar || shipBeginColumn > lastColChar ||
+          shipEndColumn   < firstColChar || shipEndColumn   > lastColChar){
     return true;
   }
   else {
