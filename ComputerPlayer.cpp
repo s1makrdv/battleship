@@ -18,16 +18,16 @@ ComputerPlayer::ComputerPlayer(std::string name) : Player(name)
 
 void ComputerPlayer::move(char *col, char *row, Board& board)
 {
-  list<Coord>::iterator c_it;
+  list<Coord>::iterator coordIt;
 
   bool isSuccess = false;
 
   while (!isSuccess && strategy_.isValid()) {
     strategy_.getMove(col, row);
-    for (c_it = coords_.begin(); c_it != coords_.end(); ++c_it) {
-      if (*col == (*c_it).col && *row == (*c_it).row) {
+    for (coordIt = coords_.begin(); coordIt != coords_.end(); ++coordIt) {
+      if (*col == (*coordIt).col && *row == (*coordIt).row) {
         isSuccess = true;
-        coords_.erase(c_it);
+        coords_.erase(coordIt);
         break;
       }
     }
@@ -35,15 +35,15 @@ void ComputerPlayer::move(char *col, char *row, Board& board)
 
   if (!isSuccess) {
     int count = (rand() % coords_.size());
-    c_it = coords_.begin();
+    coordIt = coords_.begin();
 
     while (count--) {
-      c_it++;
+      coordIt++;
     }
 
-    *col = (*c_it).col;
-    *row = (*c_it).row;
-    coords_.erase(c_it);
+    *col = (*coordIt).col;
+    *row = (*coordIt).row;
+    coords_.erase(coordIt);
   }
 }
 

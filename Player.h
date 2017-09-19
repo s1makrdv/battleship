@@ -12,8 +12,8 @@ class Player
     Player() { }
     Player(std::string name) : name_(name) { }
 
-    virtual void move(char* c, char* r, Board& board) = 0;
-    virtual void update(char c, char r) = 0;
+    virtual void move(char* col, char* row, Board& board) = 0;
+    virtual void update(char col, char row) = 0;
 
     virtual ~Player() { }
 

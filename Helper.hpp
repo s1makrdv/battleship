@@ -3,7 +3,13 @@
 
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <iostream>
+#include <stdexcept>
+
+#include "define.h"
 #include "Ship.h"
+
 
 static int const boardSize = 10;
 
@@ -39,7 +45,7 @@ std::string const boardHit = "X";
 
 std::string const legend =	"---Legend---   \nO Ship         \n@ Ship with hit\nX Missed Attack\n";
 
-const std::vector<Ship::shipInfo> shipTypes = {{ "Four-deck", 4},
+const std::vector<ShipInfo> shipTypes = {{ "Four-deck", 4},
                                                { "Three-deck", 3},
                                                { "Three-deck", 3},
                                                { "Double-deck", 2},

@@ -23,7 +23,7 @@ class Strategy
     void set_(char col, char row);
 
     Chance up_, down_, left_, right_;
-    Direction    last_dir_;
+    Direction    lastDir_;
     bool     isSuccess_, isCurrentDirSuccess;
     Coord  firstTry_;
     Coord  lastTry_;

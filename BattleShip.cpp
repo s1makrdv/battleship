@@ -8,7 +8,7 @@ using namespace std;
 BattleShip::BattleShip(istream& input, ostream& output) :
                 in_(input),
                 out_(output),
-                column_(0),
+                col_(0),
                 row_(0),
                 display_(screenPanels, sizeof(screenPanels), screenHeight),
                 firstPlayerBoard_(in_, out_),
@@ -80,16 +80,16 @@ void BattleShip::playerStep_(Board& firstBoard,
                              Player& secondPlayer)
 {
   if(firstPlayer.isSuccess() && !secondPlayer.isSuccess() ){
-    firstPlayer.move(&column_, &row_, firstBoard);
+    firstPlayer.move(&col_, &row_, firstBoard);
     firstPlayer.setStepNo();
-    if (secondBoard.checkShot(column_, row_, shipName_)) {
+    if (secondBoard.checkShot(col_, row_, shipName_)) {
       display_.write(2, firstPlayer.name() + " hit " +
                      secondPlayer.name() +
                      "'s" + " " +
                      shipName_);
 
-      firstBoard.markHit(column_, row_);
-      secondPlayer.update(column_, row_);
+      firstBoard.markHit(col_, row_);
+      secondPlayer.update(col_, row_);
     }
     else{
       display_.write(2, firstPlayer.name() + " missed!!!");

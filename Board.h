@@ -28,11 +28,11 @@ class Board
 
   private:
     bool isShipCollision_(Ship&);
-    void shipPlacementPrompt_(const Ship::shipInfo&, ConsoleDisplay& display);
-    bool isPlacedShipsRandom_(std::list<Coord>::iterator c_it,
-                           const Ship::shipInfo& info,
+    void shipPlacementPrompt_(const ShipInfo&, ConsoleDisplay& display);
+    bool isPlacedShipsRandom_(std::list<Coord>::iterator coordIt,
+                           const ShipInfo& info,
                            std::list<Coord> coords);
-    void shipPlacementRandom_(const Ship::shipInfo&);
+    void shipPlacementRandom_(const ShipInfo&);
     void markBoard_(Ship&);
     std::istream& in_;
     std::ostream& out_;

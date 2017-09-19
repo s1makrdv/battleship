@@ -1,31 +1,29 @@
 #include "ConsoleDisplay.h"
-#include <cstdlib>
-#include <iostream>
-#include <stdexcept>
+#include "Helper.hpp"
 
 using namespace std;
 
 ConsoleDisplay::ConsoleDisplay(const char widths[],
                                const char panels,
                                const char height) :
-                                 w_(widths, widths + panels),
-                                 h_(height),
-                                 p_(panels),
+                                 widths_(widths, widths + panels),
+                                 height_(height),
+                                 panels_(panels),
                                  lastRow_(0)
 {
-  for (int i = 0; i < p_; ++i)
+  for (int i = 0; i < panels_; ++i)
     screen_.push_back(vector<string>());
 
-  for (screenIt_t ship_it = screen_.begin(); ship_it != screen_.end(); ++ship_it)
-    for (int i = 0; i < h_; ++i)
-      (*ship_it).push_back(string());
+  for (ScreenIt screenIt = screen_.begin(); screenIt != screen_.end(); ++screenIt)
+    for (int i = 0; i < height_; ++i)
+      (*screenIt).push_back(string());
 }
 
 void ConsoleDisplay::clear()
 {
-  for (screenIt_t ship_it = screen_.begin(); ship_it != screen_.end(); ++ship_it)
-    for (panelIt_t p_it = (*ship_it).begin(); p_it != (*ship_it).end(); ++p_it)
-      (*p_it).clear(); // Clear string
+  for (ScreenIt screenIt = screen_.begin(); screenIt != screen_.end(); ++screenIt)
+    for (PanelIt panelIt = (*screenIt).begin(); panelIt != (*screenIt).end(); ++panelIt)
+      (*panelIt).clear(); // Clear string
 
   lastRow_ = 0;
   stream_.clear();
@@ -39,39 +37,39 @@ void ConsoleDisplay::refresh()
 
   char panel = 0;
 
-  for (screenIt_t ship_it = screen_.begin(); ship_it != screen_.end(); ++ship_it) {
-    panelIt_t p_it = (*ship_it).begin();
-    for (panelIt_t scrOut_it = screenOut.begin(); scrOut_it != screenOut.end(); ++scrOut_it) {
+  for (ScreenIt screenIt = screen_.begin(); screenIt != screen_.end(); ++screenIt) {
+    PanelIt panelIt = (*screenIt).begin();
+    for (PanelIt screenOutIt = screenOut.begin(); screenOutIt != screenOut.end(); ++screenOutIt) {
       try {
         // Append panel string plus padding
-        (*scrOut_it) += ((*p_it) + string(w_[panel] - (*p_it).length(), ' ') + "  ");
+        (*screenOutIt) += ((*panelIt) + string(widths_[panel] - (*panelIt).length(), ' ') + "  ");
       }
       catch (const length_error& le) {
-        (*scrOut_it) += ((*p_it) + "  ");
+        (*screenOutIt) += ((*panelIt) + "  ");
       }
-      ++p_it;
+      ++panelIt;
     }
     ++panel;
   }
 
   // Output each row of the screen
-  for (panelIt_t p_it = screenOut.begin(); p_it != screenOut.end(); ++p_it)
-    cout << *p_it << endl;
+  for (PanelIt panelIt = screenOut.begin(); panelIt != screenOut.end(); ++panelIt)
+    cout << *panelIt << endl;
 
   // Output stream after panels
-  for (panelIt_t st_it = stream_.begin(); st_it != stream_.end(); ++st_it)
-    cout << *st_it << endl;
+  for (PanelIt panelIt = stream_.begin(); panelIt != stream_.end(); ++panelIt)
+    cout << *panelIt << endl;
 }
 
 void ConsoleDisplay::write(const unsigned char panel,
                            const unsigned char row,
                            const string& str)
 {
-  if (panel >= p_)
+  if (panel >= panels_)
     return;
-  else if (row >= h_)
+  else if (row >= height_)
     return;
-  else if (w_[panel] < (screen_[panel][row].length() + str.length()))
+  else if (widths_[panel] < (screen_[panel][row].length() + str.length()))
     return;
   else
     screen_[panel][row] += str;
@@ -82,22 +80,22 @@ void ConsoleDisplay::write(const unsigned char panel,
 
 void ConsoleDisplay::write(const unsigned char panel, const string& str)
 {
-  if (p_ <= panel)
+  if (panels_ <= panel)
     return;
-  else if (str.length() > w_[panel])
+  else if (str.length() > widths_[panel])
     return;
 
   char row = 0;
-  panelIt_t p_it = screen_[panel].begin();
-  while ((p_it != screen_[panel].end()) && (!(*p_it).empty())) {
-    ++p_it;
+  PanelIt panelIt = screen_[panel].begin();
+  while ((panelIt != screen_[panel].end()) && (!(*panelIt).empty())) {
+    ++panelIt;
     ++row;
   }
 
-  if (h_ <= row)
+  if (height_ <= row)
     return;
 
-  (*p_it) += str;
+  (*panelIt) += str;
 
   if (lastRow_ < row)
     lastRow_ = row;

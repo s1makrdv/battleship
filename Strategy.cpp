@@ -5,7 +5,7 @@ Strategy::Strategy() :
   down_(Chance::MAYBE),
   left_(Chance::MAYBE),
   right_(Chance::MAYBE),
-  last_dir_(Direction::NONE)
+  lastDir_(Direction::NONE)
 {
 
 }
@@ -17,7 +17,7 @@ void Strategy::update(char col, char row)
   }
   else {
     isSuccess_ = true;
-    if (Direction::UP == last_dir_ || Direction::DOWN == last_dir_) {
+    if (Direction::UP == lastDir_ || Direction::DOWN == lastDir_) {
       left_ = Chance::NOTLIKELY;
       right_ = Chance::NOTLIKELY;
     }
@@ -50,7 +50,7 @@ void Strategy::reset_()
   left_ = Chance::MAYBE;
   right_ = Chance::MAYBE;
   isSuccess_ = true;
-  last_dir_ = Direction::NONE;
+  lastDir_ = Direction::NONE;
 }
 
 void Strategy::set_(char col, char row)
@@ -64,16 +64,16 @@ void Strategy::set_(char col, char row)
 void Strategy::lastDirInit_()
 {
   if (!isSuccess_) {
-    if (Direction::UP == last_dir_) {
+    if (Direction::UP == lastDir_) {
       up_ = Chance::NOTLIKELY;
     }
-    else if (Direction::DOWN == last_dir_) {
+    else if (Direction::DOWN == lastDir_) {
       down_ = Chance::NOTLIKELY;
     }
-    else if (Direction::LEFT == last_dir_) {
+    else if (Direction::LEFT == lastDir_) {
       left_ = Chance::NOTLIKELY;
     }
-    else if (Direction::RIGHT == last_dir_) {
+    else if (Direction::RIGHT == lastDir_) {
       right_ = Chance::NOTLIKELY;
     }
   }
@@ -81,8 +81,8 @@ void Strategy::lastDirInit_()
 
 void Strategy::checkUpDirSuccess_()
 {
-  if (Direction::UP != last_dir_) {
-    last_dir_ = Direction::UP;
+  if (Direction::UP != lastDir_) {
+    lastDir_ = Direction::UP;
     lastTry_ = firstTry_;
   }
 
@@ -97,8 +97,8 @@ void Strategy::checkUpDirSuccess_()
 
 void Strategy::checkDownDirSuccess_()
 {
-  if (Direction::DOWN != last_dir_) {
-    last_dir_ = Direction::DOWN;
+  if (Direction::DOWN != lastDir_) {
+    lastDir_ = Direction::DOWN;
     lastTry_ = firstTry_;
   }
 
@@ -112,8 +112,8 @@ void Strategy::checkDownDirSuccess_()
 
 void Strategy::checkLeftDirSuccess_()
 {
-  if (Direction::LEFT != last_dir_) {
-    last_dir_ = Direction::LEFT;
+  if (Direction::LEFT != lastDir_) {
+    lastDir_ = Direction::LEFT;
     lastTry_ = firstTry_;
   }
 
@@ -128,8 +128,8 @@ void Strategy::checkLeftDirSuccess_()
 
 void Strategy::checkRightDirSuccess_()
 {
-  if (Direction::RIGHT != last_dir_) {
-    last_dir_ = Direction::RIGHT;
+  if (Direction::RIGHT != lastDir_) {
+    lastDir_ = Direction::RIGHT;
     lastTry_ = firstTry_;
   }
 

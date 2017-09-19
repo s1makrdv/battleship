@@ -7,10 +7,7 @@
 class ConsoleDisplay
 {
   public:
-    typedef std::vector<std::vector<std::string> >::iterator screenIt_t;
-    typedef std::vector<std::string>::iterator panelIt_t;
-
-    ConsoleDisplay(const char w_[], const char panels, const char height);
+    ConsoleDisplay(const char widths_[], const char panels, const char height);
 
     void clear();
     void refresh();
@@ -19,8 +16,8 @@ class ConsoleDisplay
     void write(const unsigned char panel, const unsigned char row, const std::string& str);
 
   private:
-    const std::vector<char> w_;
-    const char h_, p_;
+    const std::vector<char> widths_;
+    const char height_, panels_;
     char lastRow_;
     std::vector< std::vector<std::string> > screen_;
     std::vector<std::string> stream_;

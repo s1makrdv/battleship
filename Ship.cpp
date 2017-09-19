@@ -45,12 +45,12 @@ char Ship::size() const
     return info_.size;
 }
 
-Ship::ship_it Ship::shipBegin()
+ShipIt Ship::shipBegin()
 {
     return sections_.begin();
 }
 
-Ship::ship_it Ship::shipEnd()
+ShipIt Ship::shipEnd()
 {
   return sections_.end();
 }
@@ -85,7 +85,7 @@ void buildShipSections(std::vector<ShipTile>& tiles, char shipBeginColumn, char 
   }
 }
 
-Ship::Ship(const shipInfo& i, char shipBeginColumn, char shipBeginRow, char shipEndColumn, char shipEndRow)
+Ship::Ship(const ShipInfo& i, char shipBeginColumn, char shipBeginRow, char shipEndColumn, char shipEndRow)
 {
   info_ = i;
   buildShipSections(sections_, shipBeginColumn, shipBeginRow, shipEndColumn, shipEndRow);
@@ -93,7 +93,7 @@ Ship::Ship(const shipInfo& i, char shipBeginColumn, char shipBeginRow, char ship
 
 bool Ship::checkHit(char col, char row)
 {
-  for (ship_it it = sections_.begin(); it != sections_.end(); ++it) {
+  for (ShipIt it = sections_.begin(); it != sections_.end(); ++it) {
     if ((*it).getCol() == col && (*it).getRow() == row) {
       (*it).setHit();
       // FIXME: When should we check sunk cond?
@@ -105,7 +105,7 @@ bool Ship::checkHit(char col, char row)
 
 bool Ship::isSunk()
 {
-  for(ship_it it = sections_.begin(); it != sections_.end(); ++it) {
+  for(ShipIt it = sections_.begin(); it != sections_.end(); ++it) {
     if ((*it).getHit() == false)
       return false;
   }
@@ -114,7 +114,7 @@ bool Ship::isSunk()
 
 bool Ship::checkLocation(char col, char row)
 {
-  for (ship_it it = sections_.begin(); it != sections_.end(); ++it) {
+  for (ShipIt it = sections_.begin(); it != sections_.end(); ++it) {
     if ((*it).getCol() == col && (*it).getRow() == row)
       return true;
   }
@@ -124,8 +124,8 @@ bool Ship::checkLocation(char col, char row)
 
 bool Ship::isCollision(Ship& ship)
 {
-  for (ship_it it1 = ship.sections_.begin(); it1 != ship.sections_.end(); ++it1) {
-    for (ship_it it2 = sections_.begin(); it2 != sections_.end(); ++it2) {
+  for (ShipIt it1 = ship.sections_.begin(); it1 != ship.sections_.end(); ++it1) {
+    for (ShipIt it2 = sections_.begin(); it2 != sections_.end(); ++it2) {
       auto x = (*it1).getCol();
       auto y = (*it1).getRow();
       auto i = (*it2).getCol();

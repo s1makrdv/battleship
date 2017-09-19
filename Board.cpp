@@ -53,23 +53,23 @@ string displayTile(BoardTile& tile)
 
 void Board::writeShipGrid(ConsoleDisplay& display)
 {
-  vector<BoardTile>::iterator b_it;
+  vector<BoardTile>::iterator boardTileIt;
   int row = 0;
   display.write(0, row++, shipGridTop);
   display.write(0, row++, boardTop);
 
   int i = 0;
-  for (b_it = shipGrid_.begin(); b_it != shipGrid_.end(); ++b_it) {
-    if ((*b_it).getCol() == firstColChar) {
+  for (boardTileIt = shipGrid_.begin(); boardTileIt != shipGrid_.end(); ++boardTileIt) {
+    if ((*boardTileIt).getCol() == firstColChar) {
       display.write(0, row, rowStart[i++]);
-      display.write(0, row, displayTile(*b_it));
+      display.write(0, row, displayTile(*boardTileIt));
     }
-    else if ((*b_it).getCol() == lastColChar) {
-      display.write(0, row, displayTile(*b_it));
+    else if ((*boardTileIt).getCol() == lastColChar) {
+      display.write(0, row, displayTile(*boardTileIt));
       ++row;
     }
     else {
-      display.write(0, row, displayTile(*b_it));
+      display.write(0, row, displayTile(*boardTileIt));
     }
   }
 
@@ -78,23 +78,23 @@ void Board::writeShipGrid(ConsoleDisplay& display)
 
 void Board::writeAttackGrid(ConsoleDisplay& display)
 {
-  vector<BoardTile>::iterator a_it;
+  vector<BoardTile>::iterator boardTileIt;
   int row = 0;
   display.write(1, row++, attackGridTop);
   display.write(1, row++, boardTop);
 
   int i = 0;
-  for (a_it = attackGrid_.begin(); a_it != attackGrid_.end(); ++a_it) {
-    if ((*a_it).getCol() == firstColChar) {
+  for (boardTileIt = attackGrid_.begin(); boardTileIt != attackGrid_.end(); ++boardTileIt) {
+    if ((*boardTileIt).getCol() == firstColChar) {
       display.write(1, row, rowStart[i++]);
-      display.write(1, row, displayTile(*a_it));
+      display.write(1, row, displayTile(*boardTileIt));
     }
-    else if ((*a_it).getCol() == lastColChar) {
-      display.write(1, row, displayTile(*a_it));
+    else if ((*boardTileIt).getCol() == lastColChar) {
+      display.write(1, row, displayTile(*boardTileIt));
       ++row;
     }
     else {
-      display.write(1, row, displayTile(*a_it));
+      display.write(1, row, displayTile(*boardTileIt));
     }
   }
 }
@@ -165,10 +165,10 @@ bool isOffBoard(char shipBeginColumn,
 
 bool Board::isShipCollision_(Ship& ship)
 {
-  vector<Ship>::iterator vs_it;
+  vector<Ship>::iterator shipIt;
 
-  for (vs_it = ships_.begin(); vs_it != ships_.end(); ++vs_it) {
-    if ((*vs_it).isCollision(ship)) {
+  for (shipIt = ships_.begin(); shipIt != ships_.end(); ++shipIt) {
+    if ((*shipIt).isCollision(ship)) {
       return true;
     }
   }
@@ -177,21 +177,21 @@ bool Board::isShipCollision_(Ship& ship)
 
 void Board::markBoard_(Ship& ship)
 {
-vector<ShipTile>::iterator ship_it;
+vector<ShipTile>::iterator shipTileIt;
 
-  for (ship_it = ship.shipBegin(); ship_it != ship.shipEnd(); ++ship_it) {
-    int i = ((*ship_it).getRow() - 1) * boardSize;
-    i = i + (*ship_it).getCol() - firstColChar;
+  for (shipTileIt = ship.shipBegin(); shipTileIt != ship.shipEnd(); ++shipTileIt) {
+    int i = ((*shipTileIt).getRow() - 1) * boardSize;
+    i = i + (*shipTileIt).getCol() - firstColChar;
     shipGrid_[i].setShip();
   }
 }
 
-bool Board::isPlacedShipsRandom_(std::list<Coord>::iterator c_it,
-                                 const Ship::shipInfo& info,
+bool Board::isPlacedShipsRandom_(std::list<Coord>::iterator coordIt,
+                                 const ShipInfo& info,
                                  std::list<Coord> coords)
 {
-  char shipBeginColumn = (*c_it).col;
-  char shipBeginRow = (*c_it).row;
+  char shipBeginColumn = (*coordIt).col;
+  char shipBeginRow = (*coordIt).row;
 
   char dirSeed = rand() % 4;
   int i = 0;
@@ -247,7 +247,7 @@ bool Board::isPlacedShipsRandom_(std::list<Coord>::iterator c_it,
     else {
       ships_.push_back(ship);
       markBoard_(ship);
-      coords.erase(c_it); // Delete coordinate
+      coords.erase(coordIt); // Delete coordinate
       isSuccess = true;
     }
 
@@ -256,11 +256,11 @@ bool Board::isPlacedShipsRandom_(std::list<Coord>::iterator c_it,
   return isSuccess;
 }
 
-void Board::shipPlacementRandom_(const Ship::shipInfo& info)
+void Board::shipPlacementRandom_(const ShipInfo& info)
 {
   static std::list<Coord> coords;
   static bool isInitialized = false;
-  std::list<Coord>::iterator c_it;
+  std::list<Coord>::iterator coordIt;
 
   if (!isInitialized) {
     for (int row = 1; row < 1 + boardSize; ++row) {
@@ -277,22 +277,22 @@ void Board::shipPlacementRandom_(const Ship::shipInfo& info)
   bool isSuccess = false;
   while (!isSuccess) {
     int count = (rand() % coords.size());
-    c_it = coords.begin();
+    coordIt = coords.begin();
 
     while (count--) {
-      c_it++;
+      coordIt++;
     }
 
-    isSuccess = isPlacedShipsRandom_(c_it, info, coords);
+    isSuccess = isPlacedShipsRandom_(coordIt, info, coords);
   }
 }
 
 void Board::placeShips()
 {
-  vector<Ship::shipInfo>::const_iterator ship_it;
+  vector<ShipInfo>::const_iterator shipInfoIt;
 
-  for (ship_it = shipTypes.begin(); ship_it != shipTypes.end(); ++ship_it)
-    shipPlacementRandom_(*ship_it);
+  for (shipInfoIt = shipTypes.begin(); shipInfoIt != shipTypes.end(); ++shipInfoIt)
+    shipPlacementRandom_(*shipInfoIt);
 }
 
 bool Board::makeAttempt(char col, char row)
@@ -310,13 +310,13 @@ bool Board::makeAttempt(char col, char row)
 
 bool Board::checkShot(char col, char row, string& str)
 {
-  vector<Ship>::iterator ship_it;
+  vector<Ship>::iterator shipIt;
 
   str.clear(); // clear return string
 
-  for (ship_it = ships_.begin(); ship_it != ships_.end(); ++ship_it) {
-    if ((*ship_it).checkHit(col, row)) {
-      str = (*ship_it).type(); // Return ship type string
+  for (shipIt = ships_.begin(); shipIt != ships_.end(); ++shipIt) {
+    if ((*shipIt).checkHit(col, row)) {
+      str = (*shipIt).type(); // Return ship type string
       int i = ((row - 1) * boardSize) + col - firstColChar;
       shipGrid_[i].setHit();
       return true;
@@ -333,9 +333,9 @@ void Board::markHit(char col, char row)
 
 bool Board::isSunkFleet()
 {
-  vector<Ship>::iterator ship_it;
-  for (ship_it = ships_.begin(); ship_it != ships_.end(); ++ship_it) {
-    if (!(*ship_it).isSunk()) {
+  vector<Ship>::iterator shipIt;
+  for (shipIt = ships_.begin(); shipIt != ships_.end(); ++shipIt) {
+    if (!(*shipIt).isSunk()) {
       return false;
     }
   }

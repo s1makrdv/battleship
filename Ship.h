@@ -4,26 +4,19 @@
 #include <vector>
 #include <string>
 #include "ShipTile.h"
+#include "define.h"
 
 class Ship
 {
   public:
-    typedef struct
-    {
-      std::string type;
-      char size;
-    } shipInfo;
-
-    typedef std::vector<ShipTile>::iterator ship_it;
-
-    Ship(const shipInfo&, char shipBeginColumn, char shipBeginRow, char shipEndColumn, char shipEndRow);
+    Ship(const ShipInfo&, char shipBeginColumn, char shipBeginRow, char shipEndColumn, char shipEndRow);
 
     std::string type() const;
 
     char size() const;
 
-    ship_it shipBegin() ;
-    ship_it shipEnd() ;
+    ShipIt shipBegin() ;
+    ShipIt shipEnd() ;
 
     bool isCollision(Ship&);
     bool isSunk();
@@ -32,7 +25,7 @@ class Ship
     bool static checkSize(char, char, char, char, char);
 
   private:
-    shipInfo info_;
+    ShipInfo info_;
     std::vector<ShipTile> sections_;
 };
 

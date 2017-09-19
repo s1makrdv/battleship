@@ -32,7 +32,7 @@ class BattleShip : public Game
     HumanPlayer    firstPlayer_;
     ComputerPlayer secondPlayer_;
 
-    char column_, row_;
+    char col_, row_;
 
     std::string shipName_;
     void checkFleetSunk_(Board& firstBoard,
