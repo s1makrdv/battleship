@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include "Board.h"
-#include "ConsoleDisplay.h"
 
 class Player
 {

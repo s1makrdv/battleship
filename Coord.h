@@ -6,8 +6,8 @@
 
 struct Coord
 {
-  Coord() : col(0), row(0) { }
-  Coord(char c, char r) : col(c), row(r) { }
+  Coord();
+  Coord(char c, char r);
 
   char col;
   char row;
