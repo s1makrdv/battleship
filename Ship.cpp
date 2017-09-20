@@ -131,8 +131,8 @@ bool Ship::isCollision(Ship& ship)
       auto i = (*it2).getCol();
       auto j = (*it2).getRow();
 
-      for(int k = - 1; k < 2 ; ++k){
-        for(int n = -1; n < 2 ; ++n){
+      for(int k = - 1; k <= 1 ; ++k){
+        for(int n = -1; n <= 1 ; ++n){
           if((x == (i + k))&&((y == (j + n)))){
             return true;
           }

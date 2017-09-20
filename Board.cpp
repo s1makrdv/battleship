@@ -194,14 +194,14 @@ bool Board::isPlacedShipsRandom_(std::list<Coord>::iterator coordIt,
   char shipBeginColumn = (*coordIt).col;
   char shipBeginRow = (*coordIt).row;
 
-  char dirSeed = rand() % 4;
+  char dirSeed = rand() % shipDirectionNo;
   int i = 0;
 
   bool isSuccess = false;
 
   do {
     char shipEndColumn, shipEndRow;
-    char direction = (dirSeed + i) % 4;
+    char direction = (dirSeed + i) % shipDirectionNo;
 
     switch (direction) {
       case 0:
@@ -252,7 +252,7 @@ bool Board::isPlacedShipsRandom_(std::list<Coord>::iterator coordIt,
       isSuccess = true;
     }
 
-  } while (!isSuccess && ++i < 4);
+  } while (!isSuccess && ++i < shipDirectionNo);
 
   return isSuccess;
 }

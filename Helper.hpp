@@ -60,5 +60,7 @@ const std::vector<ShipInfo> shipTypes = {{ "Four-deck", 4},
                                                { "Single-deck", 1},
                                                { "Single-deck", 1}};
 
+const  int shipDirectionNo = 4;
+
 
 #endif // HELPER_HPP
