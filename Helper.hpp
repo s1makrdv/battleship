@@ -20,6 +20,10 @@ static const char screenHeight = 60;
 const int leftPanelWidth = 30;
 const int rightPanelWidth = 30;
 
+static const char screenPanels[] = { leftPanelWidth,
+                                     rightPanelWidth,
+                                     screenHeight };
+
 const char firstColChar = 'A';
 const char lastColChar = 'J';
 

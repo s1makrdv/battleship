@@ -9,9 +9,6 @@
 #include "Board.h"
 #include "ConsoleDisplay.h"
 
-static const char screenPanels[] = { leftPanelWidth,
-                                     rightPanelWidth,
-                                     screenHeight };
 
 
 class BattleShip : public Game
